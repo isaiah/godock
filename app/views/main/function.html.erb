@@ -91,9 +91,7 @@ $(document).ready(function() {
 	<% if @function.arglists.size > 0 %>
 	<div class="usage">
 		<ul>
-			<% @function.arglists.each do |a| %>
-			<li>(<%= (@function.name + " " +  a[1..-2]).strip %>)</li>
-			<% end %>
+          <li><%= @function.arglists %></li>
 		</ul>
 	</div>
 	<% end %>

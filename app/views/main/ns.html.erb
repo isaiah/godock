@@ -59,7 +59,7 @@
 		</div>
 	</div>
 	<% end %>
-	<h3>Vars in <%= params[:ns] %></h3>
+	<h3>Functions in <%= params[:ns] %></h3>
 
 	<div class="functions_list">
 		<% group_into_ns(@ns.functions).each do |g| %>
@@ -80,6 +80,13 @@
 			<div class="clear"></div>
 		<% end%>
 	</div>
+    <h3>Types in <%= params[:ns] %></h3>
+    <div class="functions_list">
+      <h5>L</h5>
+      <div class="functions">
+        <%= link_to "type Reader", "/strings/Reader" %>
+      </div>
+    </div>
 </div>
 <div class="grid_3">
 	&nbsp;
