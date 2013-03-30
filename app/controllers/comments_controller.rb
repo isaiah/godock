@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
     
     flash[:message] = "There was a problem deleting that comment."
     
-    if current_user_session
+    if current_user
       @example = Comment.find_by_id_and_user_id(params[:id], current_user.id)
       if @example
         if @example.delete

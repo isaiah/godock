@@ -1,23 +1,23 @@
 source 'http://rubygems.org'
-ruby "1.8.7"
 
-gem 'rake', '0.8.7'
-gem 'rails', '2.3.5'
-gem 'ruby-openid', '2.1.7'
-gem 'rack-openid', '1.0.3', :require => nil
+gem 'rails', '~> 3.2.12'
+gem 'ruby-openid'
+gem 'rack-openid', :require => nil
 gem "pg"
 gem "pg_search"
-gem 'rubytree', '0.7.0'
+#gem 'rubytree', '0.7.0'
 gem 'dalli', '~> 1.0.5'
+gem 'acts_as_commentable_with_threading'
 
 gem 'rdiscount', '1.6.5'
 gem 'chronic', '0.2.3'
-gem 'will_paginate', '2.3.12'
+gem 'will_paginate'
 #gem 'levenshtein', '0.2.0'
 gem 'capistrano', '2.5.19'
 
 group :development do
   gem 'pry'
+  gem 'better_errors'
 end
 
 group :production do
@@ -31,3 +31,6 @@ group :test do
   gem 'rcov', '0.9.9', :require => nil
   gem 'ruby-prof', '0.9.2'
 end
+gem 'psych'
+gem 'devise'
+gem "devise_openid_authenticatable"

@@ -34,7 +34,7 @@
 		</div>
 		<div class="grid_12">
 			<div class="search_form">			
-				<% form_tag({:action => 'search'}, {:method => 'get'}) do |f| %>
+				<%= form_tag({:action => 'search'}, {:method => 'get'}) do |f| %>
 				<fieldset>
 					<legend>Find in <%= params[:lib] %></legend>
 					<span class="row">

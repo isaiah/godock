@@ -13,7 +13,7 @@ class ExamplesController < ApplicationController
       return
     end
 
-    if not current_user_session
+    if not current_user
       render json_fail "You must be logged in to create an example."
       return
     end
@@ -50,7 +50,7 @@ class ExamplesController < ApplicationController
     example_id = params[:example_id]
     body = params[:example][:body] rescue nil
     
-    if not current_user_session
+    if not current_user
       render json_fail "You must be logged in to update an example."
       return
     end
@@ -97,7 +97,7 @@ class ExamplesController < ApplicationController
       return
     end
 
-    if not current_user_session
+    if not current_user
       render json_fail "You must be logged in to delete an example."
       return
     end

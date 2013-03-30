@@ -52,9 +52,9 @@
 		<% end %>
 		</ul>
 		<% end %>
-		<% if current_user_session %>
+		<% if current_user %>
 		<div id="new_example" class="example">
-			<% form_for :example, @example do |f| %>
+			<%= form_for :example, @example do |f| %>
 			Example <span class="instructions">(markdown allowed, code in &lt;pre /&gt;)</span>
 			<%= image_tag "ajax-loader.gif", :class => "ajax_loader", :width => 20, :height => 20 %>
 			<div class="clear"></div>
@@ -78,7 +78,7 @@
 		</div>
 		<% end %>
 		
-		<% if current_user_session %>
+		<% if current_user %>
 			<a href="" id="add_new_example">Add an example.</a>
 		<% else %>
 			Log in to add / edit an example.

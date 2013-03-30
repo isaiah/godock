@@ -1,8 +1,8 @@
 class Category < ActiveRecord::Base
   has_and_belongs_to_many :functions
 
-  named_scope :top_level, :conditions => "name NOT LIKE '%>%'", :order => "name ASC"
-  named_scope :sub_categories_scope, lambda { |parent_cat_name| 
+  scope :top_level, :conditions => "name NOT LIKE '%>%'", :order => "name ASC"
+  scope :sub_categories_scope, lambda { |parent_cat_name| 
     {
         :conditions => ["name LIKE ? OR name LIKE ?", parent_cat_name, "#{parent_cat_name}%"],
         :order => "name ASC"

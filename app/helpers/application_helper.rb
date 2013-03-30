@@ -15,7 +15,7 @@ module ApplicationHelper
       first_char = name[0,1].downcase
       if first_char == "*"
         "*"
-      elsif first_char[0] < 97
+      elsif first_char.getbyte(0) < 97
         "+"
       else
         first_char
@@ -29,7 +29,7 @@ module ApplicationHelper
       first_char = name[0,1].downcase
       if first_char == "*"
         "*"
-      elsif first_char[0] < 97
+      elsif first_char.getbyte(0) < 97
         "+"
       else
         first_char

@@ -13,7 +13,7 @@ class ApplicationControllerTest < ActionController::TestCase
       end
       
       should "return the current user" do
-        assert_not_nil @app_controller.send(:current_user_session)
+        assert_not_nil @app_controller.send(:current_user)
         assert_equal @app_controller.send(:current_user).login, "zkim"
       end
     end
@@ -24,7 +24,7 @@ class ApplicationControllerTest < ActionController::TestCase
       end
       
       should "return nil" do
-        assert_nil @app_controller.send :current_user_session
+        assert_nil @app_controller.send :current_user
         assert_nil @app_controller.send :current_user
       end
     end

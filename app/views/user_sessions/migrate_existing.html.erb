@@ -22,7 +22,7 @@
 </div>
 <br />
 <h3>Or manually enter your OpenID url below</h3>
-<% form_for :user_session, @user_session do |f| %>
+<%= form_for :user_session, @user_session do |f| %>
   	<%= f.label :openid_identifier, "OpenID URL"%>
 	<%= f.text_field :openid_identifier %>
 	<%= error_message_on :user, :openid_identifier %>

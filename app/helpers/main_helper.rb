@@ -28,6 +28,6 @@ module MainHelper
       ret << generate_level(lib, version, current_ns, v, path + [k]) if v.size > 0
     end
     ret << "</ul>"
-    ret
+    ret.html_safe
   end
 end

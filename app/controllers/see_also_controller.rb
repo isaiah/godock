@@ -2,7 +2,7 @@ class SeeAlsoController < ApplicationController
  
   def vote
     
-    if not current_user_session
+    if not current_user
       render json_fail("No valid user session.")
       return
     end
@@ -93,7 +93,7 @@ class SeeAlsoController < ApplicationController
   
   def add
     
-    if not current_user_session
+    if not current_user
       redner json_fail "Must be logged in to add see alsos."
       return
     end

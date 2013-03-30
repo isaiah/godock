@@ -42,7 +42,7 @@
             &nbsp;
             &nbsp;
 				  <span class="user_area_content">
-				    <% if current_user_session %>
+				    <% if current_user %>
 				      <%= image_tag(grav_url_for(current_user.email, 16), :class => 'user_area_gravatar') %>
 				      Logged in as <%= link_to current_user.login, :controller => 'user', :action => 'profile', :login => current_user.login %>
 				      |
@@ -62,7 +62,7 @@
 		</div>
 		<div class="grid_8">
 			<div class="search">
-				<% form_tag '/search', :method => "GET" do %>
+				<%= form_tag '/search', :method => "GET" do %>
 					<%= image_submit_tag 'magnifying_glass_alt_24x24.png', :class => 'submit_image', :height => '20px', :width => '20px' %>
 					<input id="main_search" class="text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> />
 					<% if params[:lib] %>

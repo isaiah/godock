@@ -1,0 +1,19 @@
+require File.expand_path('../boot', __FILE__)
+
+require 'rails/all'
+
+Bundler.require(:default, Rails.env) if defined?(Bundler)
+
+module ClojuredocsPg
+  class Application < Rails::Application
+    config.secret_token = '4a0d577861650b391bcd71dbd12c11dd5e811c294f43c07cb352e8ab34c2c96a3292a8404b195ee6389c1c668fa670d2f207b278d9bae2c28b475beab2c2c438'
+    config.autoload_paths += [config.root.join('lib')]
+    config.encoding = 'utf-8'
+    config.time_zone = 'UTC'
+  
+    config.action_controller.perform_caching = true
+    
+    config.filter_parameters += [:password, :password_confirmation]
+  end
+end
+ROOT_URL = ""

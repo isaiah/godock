@@ -1,15 +1,17 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130213193847) do
+ActiveRecord::Schema.define(:version => 20130330142838) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -67,8 +69,26 @@ ActiveRecord::Schema.define(:version => 20130213193847) do
     t.integer "to_function_id"
   end
 
-# Could not dump table "functions" because of following StandardError
-#   Unknown type 'tsvector' for column 'search_vector'
+  create_table "functions", :force => true do |t|
+    t.string   "name"
+    t.string   "file"
+    t.string   "line"
+    t.string   "arglists_comp"
+    t.string   "added"
+    t.text     "doc"
+    t.text     "source"
+    t.integer  "weight",                          :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "shortdoc",          :limit => 70
+    t.string   "version"
+    t.string   "url_friendly_name"
+    t.integer  "namespace_id"
+    t.tsvector "search_vector"
+  end
+
+  add_index "functions", ["namespace_id"], :name => "namespace_id_idx"
+  add_index "functions", ["search_vector"], :name => "functions_search_idx"
 
   create_table "libraries", :force => true do |t|
     t.string   "name"
@@ -143,12 +163,12 @@ ActiveRecord::Schema.define(:version => 20130213193847) do
 
   create_table "users", :force => true do |t|
     t.string   "login"
-    t.string   "email",                             :null => false
+    t.string   "email",                                  :null => false
     t.string   "crypted_password"
     t.string   "password_salt"
-    t.string   "persistence_token",                 :null => false
-    t.integer  "login_count",        :default => 0, :null => false
-    t.integer  "failed_login_count", :default => 0, :null => false
+    t.string   "persistence_token",                      :null => false
+    t.integer  "login_count",            :default => 0,  :null => false
+    t.integer  "failed_login_count",     :default => 0,  :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
@@ -157,9 +177,20 @@ ActiveRecord::Schema.define(:version => 20130213193847) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "openid_identifier"
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
 
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["openid_identifier"], :name => "index_users_on_openid_identifier"
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "votes", :force => true do |t|
     t.boolean  "vote",                        :default => false

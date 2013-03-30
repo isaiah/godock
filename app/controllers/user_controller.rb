@@ -6,7 +6,7 @@ class UserController < ApplicationController
     
     @user = User.find_by_login(params[:login])
     
-    if request.post? and current_user_session and @user.id == current_user.id
+    if request.post? and current_user and @user.id == current_user.id
       current_user.update_attributes params[:user]
       if current_user.valid?
         current_user.save!

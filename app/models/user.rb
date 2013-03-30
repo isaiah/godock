@@ -1,9 +1,13 @@
 class User < ActiveRecord::Base
-  
-  acts_as_authentic do |c|
-    #c.openid_required_fields = [:nickname, :email]    
-  end
-  
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :openid_authenticatable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
   def self.find_by_login_or_email(login)
     User.find_by_login(login) || User.find_by_email(login)
   end
@@ -15,6 +19,10 @@ class User < ActiveRecord::Base
     end
     
     col
+  end
+
+  def self.build_from_identity_url(identity_url)
+    User.new(:identity_url => identity_url)
   end
   
   private 

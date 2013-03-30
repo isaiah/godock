@@ -8,7 +8,7 @@
 		</div>
 		<div class="controls">
 			<a name="comment_<%=c.id%>" href="#comment_<%=c.id%>">link</a>
-		<% if current_user_session and c.belongs_to?(current_user) %>
+		<% if current_user and c.belongs_to?(current_user) %>
 			|
 			<a href="#" class="edit" id="edit_<%= c.id %>">edit</a> 
 			|
