@@ -85,7 +85,7 @@ class MainController < ApplicationController
   end
 
   def libs
-    @libs = Library.find(:all, :order => 'name')
+    @libs = Library.order('name')
   end
 
   def search
@@ -210,20 +210,16 @@ class MainController < ApplicationController
       function_url_name = params[:function]
       
       if version
-        @function = Function.find(
-          :first,
-          :include => [:namespace, {:namespace => :library}],
-          :conditions => {
-            :namespaces => {:name => ns, :libraries => {:url_friendly_name => lib_url_name, :version => version}},
-            :url_friendly_name => function_url_name})
+        @function = Function.includes(:namespace, {:namespace => :library}).where(
+            :namespaces => {:name => ns},
+            :libraries => {:url_friendly_name => lib_url_name, :version => version},
+            :url_friendly_name => function_url_name).first
       else
-        @function = Function.find(
-          :first,
-          :include => [:namespace, {:namespace => :library}],
-          :conditions => {:namespaces => {:name => ns,
-                                          :libraries => {:url_friendly_name => lib_url_name,
-                                                         :current => true}},
-          :url_friendly_name => function_url_name})
+        @function = Function.includes(:namespace, {:namespace => :library}).where(
+          :namespaces => {:name => ns},
+          :libraries => {:url_friendly_name => lib_url_name,
+            :current => true},
+          :url_friendly_name => function_url_name).first
       end
           
       if not @function

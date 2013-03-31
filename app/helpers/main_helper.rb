@@ -1,7 +1,7 @@
 module MainHelper
   def treeify(namespaces)
     tree = {}
-    namespaces.map{|ns| ns.split(".") }.each do |ns|
+    namespaces.map{|ns| ns.split("/") }.each do |ns|
       parent = tree
       ns.each do |part|
         parent[part] ||= {}
@@ -14,7 +14,7 @@ module MainHelper
   def generate_level(lib, version, current_ns, root, path = [])
     ret = "<ul>"
     root.each do |k, v|
-      ns = path.empty? ? k : path.join(".") + "." + k
+      ns = path.empty? ? k : path.join("/") + "/" + k
       ret << <<-EOF
         <li><span class="#{current_ns == ns ? "current_ns" : ""}">
         #{link_to k,

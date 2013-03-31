@@ -51,11 +51,11 @@
 	<% if @ns and @ns.doc != ""%>
 	<div class="doc">
 		<h3>DocString</h3>
-		<pre><%= @ns.doc.gsub("\n", "<br />") %></pre>
+		<pre><%= @ns.doc.gsub("\n", "<br />").html_safe %></pre>
 		<div class="copyright_license">
 			<%= @library.copyright %>
 			
-			<%= (@library.license || "See <a href='#{@library.site_url}'>#{@library.site_url}</a> for copyright and license details.")%>
+			<%= (@library.license || "See <a href='#{@library.site_url}'>#{@library.site_url}</a> for copyright and license details.").html_safe %>
 		</div>
 	</div>
 	<% end %>

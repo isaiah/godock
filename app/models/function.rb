@@ -69,15 +69,13 @@ class Function < ActiveRecord::Base
   end
   
   def self.libraries
-    Function.find(:all, :select => 'distinct(library),library').map(&:library).sort
+    Function.select('distinct(library),library').map(&:library).sort
   end
   
   def self.versions_of(function)
-    Function.find(:all, 
-                  :include => [:namespace, {:namespace => :library}],
-                  :conditions => {:namespaces => {:name => function.namespace.name,
-                                                 :libraries => {:name => function.library.name}},
-                                  :name => function.name})
+    Function.includes(:namespace, {:namespace => :library}).where(
+      :namespaces => {:name => function.namespace.name},
+      :libraries => {:name => function.library.name}, :name => function.name)
   end
 
   def link_opts(use_current_vs_actual_version = true)

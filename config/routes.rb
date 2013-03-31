@@ -8,11 +8,9 @@ ClojuredocsPg::Application.routes.draw do
   match '/search/:lib' => 'main#search'
   match '/ac_search' => 'main#lib_search'
   match '/ac_search/:lib' => 'main#lib_search'
-  match '/examples/new' => 'examples#new'
-  match '/examples/update' => 'examples#update'
-  match '/examples/delete' => 'examples#delete'
   match '/examples/view_changes/:id' => 'examples#view_changes'
-  match '/comments/delete' => 'comments#delete'
+  resources :examples
+  resources :comments
   match '/quickref/:lib' => 'main#quick_ref_shortdesc'
   match '/quickref/shortdesc/:lib' => 'main#quick_ref_shortdesc'
   match '/quickref/varsonly/:lib' => 'main#quick_ref_vars_only'
@@ -27,11 +25,11 @@ ClojuredocsPg::Application.routes.draw do
   match '/management/:lib/function' => 'management#function'
   match '/management/:lib' => 'management#index'
   match '/:lib/:version' => 'main#lib', :constraints => { :version => /\d+\.[^\/]*/ }
-  match '/:lib/:version/:ns' => 'main#ns', :constraints => { :version => /\d+\.[^\/]*/ }
-  match '/:lib/:version/:ns/:function' => 'main#function', :constraints => { :version => /\d+\.[^\/]*/ }
+  match '/:lib/:version/:*ns/:function' => 'main#function', :constraints => { :version => /\d+\.[^\/]*/ }
+  match '/:lib/:version/:*ns' => 'main#ns', :constraints => { :version => /\d+\.[^\/]*/ }
   match '/:lib' => 'main#lib'
-  match '/:lib/:ns' => 'main#ns'
-  match '/:lib/:ns/:function' => 'main#function'
+  match '/:lib/*ns/:function' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/, function: /[A-Z]\w+/ }
+  match '/:lib/*ns' => 'main#ns'
   root :to => "main#index"
 end
 

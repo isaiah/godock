@@ -100,11 +100,11 @@ $(document).ready(function() {
 	<% if @function.doc %>
 	<div class="doc">
 		<a class="internal_nav scroll" href="#doc" name="doc"></a>
-		<div class="content"><%= @function.doc.gsub("\n", "<br />").gsub(/http:\/\/[a-zA-Z0-9-.\/?%&=:@;_#]*/){|s| '<a href="' + s + '">' + s + '</a>' } if @function.doc %></div>
+		<div class="content"><%= @function.doc.gsub("\n", "<br />").gsub(/http:\/\/[a-zA-Z0-9-.\/?%&=:@;_#]*/){|s| '<a href="' + s + '">' + s + '</a>' }.html_safe if @function.doc %></div>
 		<div class="copyright_license">
 			<%= @library.copyright %>
 			
-			<%= (@library.license || "See <a href='#{@library.site_url}'>#{@library.site_url}</a> for copyright and license details.")%>
+			<%= (@library.license || "See <a href='#{@library.site_url}'>#{@library.site_url}</a> for copyright and license details.").html_safe %>
 		</div>
 	</div>
 	<% end %>
