@@ -1,12 +1,17 @@
 source 'http://rubygems.org'
 
 group :assets do
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyracer', '~> 0.10.2', :platforms => :ruby
+
+  gem 'jquery-ui-rails'
   gem 'sass-rails', '~> 3.2.3'
 
   gem 'uglifier', '>= 1.0.3'
   gem 'zurb-foundation', '~> 4.0.0'
 end
 
+gem 'jquery-rails'
 gem 'rails', '~> 3.2.12'
 gem 'ruby-openid'
 gem 'rack-openid', :require => nil

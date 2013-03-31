@@ -1,6 +1,6 @@
 class MainController < ApplicationController
 
-  layout 'main', :except => ["lib_search", "preview_example"]
+  layout 'application', :except => ["lib_search", "preview_example"]
   caches_page :index
   caches_page :lib
   caches_page :quick_ref_shortdesc
