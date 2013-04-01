@@ -1,6 +1,6 @@
 class MainController < ApplicationController
 
-  layout 'main', :except => ["lib_search", "preview_example"]
+  layout 'application', :except => ["lib_search", "preview_example"]
   caches_page :index
   caches_page :lib
   caches_page :quick_ref_shortdesc
@@ -53,7 +53,6 @@ class MainController < ApplicationController
       logger.error "Tried to load library #{params[:lib]}"
 
       render :template => 'public/404.html', :layout => false, :status => 404
-      return
     end
   end
 
@@ -64,10 +63,8 @@ class MainController < ApplicationController
     if @library and @library.name == "overtone"
       @spheres = CCQuickRef.spheres
       render :action => "clojure_core_shortdesc"
-      return
     else
       render :template => 'public/404.html', :layout => false, :status => 404
-      return
     end
   end
 
@@ -77,10 +74,8 @@ class MainController < ApplicationController
     if @library and @library.name == "overtone"
       @spheres = CCQuickRef.spheres
       render :action => "clojure_core_vars_only"
-      return
     else
       render :template => 'public/404.html', :layout => false, :status => 404
-      return
     end
   end
 
@@ -142,7 +137,6 @@ class MainController < ApplicationController
     if params[:feeling_lucky] and @functions.size > 0
       func = @functions[0]
       redirect_to "/#{func.library}/#{func.ns}/#{CGI::escape(func.name)}"
-      return
     end
 
 
@@ -198,7 +192,6 @@ class MainController < ApplicationController
       
       if not @ns or not @library
         render :template => 'public/404.html', :layout => false, :status => 404
-        return
       end
     end
     
@@ -210,27 +203,21 @@ class MainController < ApplicationController
       function_url_name = params[:function]
       
       if version
-        @function = Function.find(
-          :first,
-          :include => [:namespace, {:namespace => :library}],
-          :conditions => {
-            :namespaces => {:name => ns, :libraries => {:url_friendly_name => lib_url_name, :version => version}},
-            :url_friendly_name => function_url_name})
+        @function = Function.includes(:namespace, {:namespace => :library}).where(
+          :namespaces => {:name => ns},
+          :libraries => {:url_friendly_name => lib_url_name, :version => version},
+          :url_friendly_name => function_url_name).first
       else
-        @function = Function.find(
-          :first,
-          :include => [:namespace, {:namespace => :library}],
-          :conditions => {:namespaces => {:name => ns,
-                                          :libraries => {:url_friendly_name => lib_url_name,
-                                                         :current => true}},
-          :url_friendly_name => function_url_name})
+        @function = Function.includes(:namespace, {:namespace => :library}).where(
+          :namespaces => {:name => ns},
+          :libraries => { :url_friendly_name => lib_url_name, :current => true},
+          :url_friendly_name => function_url_name).first
       end
           
       if not @function
         logger.error "Couldn't find function id #{params[:id]}"
 
         render :template => 'public/404.html', :layout => false, :status => 404
-        return  
       end
       
       @example = Example.new
@@ -250,7 +237,6 @@ class MainController < ApplicationController
 
         @comment.save
         redirect_to @function.href
-        return
       end
 
     end
@@ -262,7 +248,6 @@ class MainController < ApplicationController
         logger.error "Couldn't find function id #{params[:id]}"
 
         render :template => 'public/404.html', :layout => false, :status => 404
-        return  
       end
       
       version = (params[:version] || @function.version)
@@ -271,7 +256,6 @@ class MainController < ApplicationController
         logger.error "Couldn't find function id #{params[:id]}"
 
         render :template => 'public/404.html', :layout => false, :status => 404
-        return  
       end
       
       redirect_to :controller => 'main',
@@ -289,7 +273,6 @@ class MainController < ApplicationController
       q = q.gsub("-", "")
       if not q
         #render :json => []
-        #return
         q = ""
       end
 

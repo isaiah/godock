@@ -2,7 +2,8 @@ class Function < ActiveRecord::Base
   include PgSearch
   
   belongs_to :namespace
-  
+  belongs_to :struct
+
   has_many :examples
   has_many :comments
   has_and_belongs_to_many :source_references, 
@@ -69,15 +70,14 @@ class Function < ActiveRecord::Base
   end
   
   def self.libraries
-    Function.find(:all, :select => 'distinct(library),library').map(&:library).sort
+    Function.select('distinct(library),library').map(&:library).sort
   end
   
   def self.versions_of(function)
-    Function.find(:all, 
-                  :include => [:namespace, {:namespace => :library}],
-                  :conditions => {:namespaces => {:name => function.namespace.name,
-                                                 :libraries => {:name => function.library.name}},
-                                  :name => function.name})
+    Function.includes(:namespace, {:namespace => :library}).where(
+                  :namespaces => {:name => function.namespace.name},
+                  :libraries => {:name => function.library.name},
+                  :name => function.name)
   end
 
   def link_opts(use_current_vs_actual_version = true)
@@ -107,9 +107,6 @@ class Function < ActiveRecord::Base
       return nil
     end
     
-    Function.find(:first, :conditions => {:library => library,
-                                          :ns => ns,
-                                          :name => name,
-                                          :version => stable_lib.version})
+    Function.where(:library => library, :ns => ns, :name => name, :version => stable_lib.version).first
   end
 end

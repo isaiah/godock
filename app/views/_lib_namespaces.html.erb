@@ -16,10 +16,10 @@ current_ns = params[:ns]
 
 if @library
 
-    _nss = @library.namespaces.map(&:name).sort
+   _nss = @library.namespaces.map(&:name).sort
 %>
-<div class="namespaces">
-  <h3>Namespaces</h3>
-  <%= generate_level(@library.url_friendly_name, params[:version], current_ns, treeify(_nss)) %>
-</div>
+  <div class="namespaces">
+    <h3>Packages</h3>
+    <%= generate_level(@library.url_friendly_name, params[:version], current_ns, treeify(_nss)) %>
+  </div>
 <% end %>

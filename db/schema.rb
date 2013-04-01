@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130330142838) do
+ActiveRecord::Schema.define(:version => 20130330154854) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -160,6 +160,18 @@ ActiveRecord::Schema.define(:version => 20130330142838) do
 
   add_index "see_alsos", ["from_id"], :name => "from_id_idx"
   add_index "see_alsos", ["to_id"], :name => "to_id_idx"
+
+  create_table "types", :force => true do |t|
+    t.string   "name"
+    t.integer  "namespace_id"
+    t.text     "doc"
+    t.string   "source_url"
+    t.string   "arglists_comp"
+    t.string   "version"
+    t.string   "type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "login"
