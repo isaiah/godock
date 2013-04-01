@@ -10,17 +10,7 @@ module ApplicationHelper
   end
   
   def group_into_ns(functions)
-    functions.sort{|a,b| a.name <=> b.name}.group_by do |f|
-      name = f[:name]
-      first_char = name[0,1].downcase
-      if first_char == "*"
-        "*"
-      elsif first_char.getbyte(0) < 97
-        "+"
-      else
-        first_char
-      end
-    end
+    functions.sort_by(&:name).group_by{|f| f.name[0] }
   end
   
   def functions_group_into_alpha(functions)

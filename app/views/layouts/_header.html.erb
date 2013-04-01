@@ -11,7 +11,7 @@
 						lbl += "<br />"
 						lbl += "<span class='shortdoc'>" + v.shortdoc + "</span>"
 						lbl += "</div>"
-						out.push({label: lbl, value: v.name, href: v.href})
+						out.push({html: true, label: lbl, value: v.name, href: v.href})
 					})
 					
 					add(out)
@@ -24,6 +24,7 @@
 				window.location.href = ui.item.href
 				return false
 			},
+                        html: true,
 			dataType: "json"
 		})
 	})

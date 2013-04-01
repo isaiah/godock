@@ -14,5 +14,7 @@
 //= require_tree .
 //
 $(function() {
-        SyntaxHighlighter.all();
+        //SyntaxHighlighter.all();
 });
+
+

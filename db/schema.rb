@@ -169,12 +169,12 @@ ActiveRecord::Schema.define(:version => 20130401152423) do
   add_index "see_alsos", ["from_id"], :name => "from_id_idx"
   add_index "see_alsos", ["to_id"], :name => "to_id_idx"
 
-  create_table "types", :force => true do |t|
+  create_table "type_classes", :force => true do |t|
     t.string   "name"
     t.integer  "namespace_id"
     t.text     "doc"
     t.string   "source_url"
-    t.string   "arglists_comp"
+    t.text     "arglists_comp"
     t.string   "version"
     t.string   "type"
     t.datetime "created_at",    :null => false
