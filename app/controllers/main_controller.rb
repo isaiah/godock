@@ -80,7 +80,7 @@ class MainController < ApplicationController
   end
 
   def libs
-    @libs = Library.find(:all, :order => 'name')
+    @libs = Library.order('name')
   end
 
   def search

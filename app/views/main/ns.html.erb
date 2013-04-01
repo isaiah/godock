@@ -51,7 +51,7 @@
 	<% if @ns and @ns.doc != ""%>
 	<div class="doc">
 		<h3>DocString</h3>
-		<pre><%= @ns.doc.gsub("\n", "<br />") %></pre>
+		<%= raw @ns.doc %>
 		<div class="copyright_license">
 			<%= @library.copyright %>
 			

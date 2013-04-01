@@ -75,9 +75,8 @@ class Function < ActiveRecord::Base
   
   def self.versions_of(function)
     Function.includes(:namespace, {:namespace => :library}).where(
-                  :namespaces => {:name => function.namespace.name},
-                  :libraries => {:name => function.library.name},
-                  :name => function.name)
+      :namespaces => {:name => function.namespace.name},
+      :libraries => {:name => function.library.name}, :name => function.name)
   end
 
   def link_opts(use_current_vs_actual_version = true)
