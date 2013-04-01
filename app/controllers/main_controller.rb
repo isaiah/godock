@@ -278,12 +278,12 @@ class MainController < ApplicationController
 
       q = '"' + q + '*"'
       
-      core_current_version = (Library.find_by_name_and_current("Clojure Core", true).version rescue nil || "1.2.0")
-      contrib_current_version = (Library.find_by_name_and_current("Clojure Contrib", true).version rescue nil || "1.2.0")
+      core_current_version = (Library.find_by_name_and_current("gopkg", true).version rescue nil || "1.0.3")
+      contrib_current_version = (Library.find_by_name_and_current("Clojure Contrib", true).version rescue nil || "1.0.3")
       
       # @version (\"#{core_current_version}\" | \"#{contrib_current_version}\")
 
-      @functions = Function.quick_search("@name #{q}")
+      @functions = Function.quick_search(q)
 
         @functions.delete(nil)
 
