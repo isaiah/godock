@@ -25,9 +25,12 @@ ClojuredocsPg::Application.routes.draw do
   match '/management/:lib/function' => 'management#function'
   match '/management/:lib' => 'management#index'
   match '/:lib/:version' => 'main#lib', :constraints => { :version => /\d+\.[^\/]*/ }
+  match '/:lib/:version/*ns/t/:type_class' => 'main#type_class', constraints: { :version => /\d+\.[^\/]*/, ns: /\w+(\/\w+)*?/, type_class: /[A-Z]\w+/ }
   match '/:lib/:version/:*ns/:function' => 'main#function', :constraints => { :version => /\d+\.[^\/]*/ }
   match '/:lib/:version/:*ns' => 'main#ns', :constraints => { :version => /\d+\.[^\/]*/ }
   match '/:lib' => 'main#lib'
+  match '/:lib/*ns/t/:type_class' => 'main#type_class', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]\w+/ }
+  match '/:lib/*ns/t/:type_class/:function' => 'main#type_class', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]\w+/ }
   match '/:lib/*ns/:function' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/, function: /[A-Z]\w+/ }
   match '/:lib/*ns' => 'main#ns'
   root :to => "main#index"

@@ -1,7 +1,7 @@
 class Function < ActiveRecord::Base
   include PgSearch
   
-  belongs_to :namespace
+  belongs_to :functional, polymorphic: true
   belongs_to :struct
 
   has_many :examples
@@ -62,7 +62,7 @@ class Function < ActiveRecord::Base
   end
   
   def library
-    namespace.library
+    functional.library
   end
   
   def see_alsos_sorted
@@ -74,7 +74,7 @@ class Function < ActiveRecord::Base
   end
   
   def self.versions_of(function)
-    Function.includes(:namespace, {:namespace => :library}).where(
+    Function.includes(:functional, {:functional => :library}).where(
       :namespaces => {:name => function.namespace.name},
       :libraries => {:name => function.library.name}, :name => function.name)
   end
@@ -84,7 +84,7 @@ class Function < ActiveRecord::Base
      :action     => 'function',
      :lib        => library.url_friendly_name,
      :version    => (use_current_vs_actual_version && library.current ? nil : version),
-     :ns         => namespace.name,
+     :ns         => functional.name,
      :function   => url_friendly_name}
   end
   

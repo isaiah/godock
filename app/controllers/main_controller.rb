@@ -200,17 +200,25 @@ class MainController < ApplicationController
       version = params[:version]
 
       ns = params[:ns]
+      type_class = params[:type_class]
       function_url_name = params[:function]
+
+      if type_class
+        sql = "select * from functions left outer join type_classes on type_classes.id  = functions.functional_id left outer join namespaces on namespaces.id = type_classes.namespace_id left outer join libraries where libraries.id = namespace.library_id where functions.functional_type = 'TypeClass' and libraries.url_friendly_name = ?"
+      end
       
       if version
-        @function = Function.includes(:namespace, {:namespace => :library}).where(
-          :namespaces => {:name => ns},
+        sql = "select * from functions left outer join namespaces on namespaces.id = functions.functional_id left outer join libraries where libraries.id = namespace.library_id where functions.functional_type = 'Namespace' and libraries.url_friendly_name = ?"
+        @function = Function.includes(:functional, {:functional => :library}).where(
+          :functional => {:name => ns},
           :libraries => {:url_friendly_name => lib_url_name, :version => version},
+          :functional_type => "Namespace",
           :url_friendly_name => function_url_name).first
       else
-        @function = Function.includes(:namespace, {:namespace => :library}).where(
-          :namespaces => {:name => ns},
+        @function = Function.includes(:functional, {:functional => :library}).where(
+          :functional => {:name => ns},
           :libraries => { :url_friendly_name => lib_url_name, :current => true},
+          :functional_type => "Namespace",
           :url_friendly_name => function_url_name).first
       end
           
@@ -239,6 +247,35 @@ class MainController < ApplicationController
         redirect_to @function.href
       end
 
+    end
+
+    def type_class
+      lib_url_name = params[:lib]
+      version = params[:version]
+
+      ns = params[:ns]
+      type_class_name = params[:type_class]
+      
+      if version
+        @type_class = TypeClass.includes(:namespace, {:namespace => :library}).where(
+          :namespaces => {:name => ns},
+          :libraries => {:url_friendly_name => lib_url_name, :version => version},
+          :name => type_class_name).first
+      else
+        @type_class = TypeClass.includes(:namespace, {:namespace => :library}).where(
+          :namespaces => {:name => ns},
+          :libraries => { :url_friendly_name => lib_url_name, :current => true},
+          :name => type_class_name).first
+      end
+          
+      if not @type_class
+        logger.error "Couldn't find function id #{params[:id]}"
+
+        render 404
+      end
+      
+      @example = Example.new
+      @comment = Comment.new
     end
     
     def function_short_link

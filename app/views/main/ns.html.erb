@@ -59,27 +59,7 @@
 		</div>
 	</div>
 	<% end %>
-	<h3>Functions in <%= params[:ns] %></h3>
-
-	<div class="functions_list">
-		<% group_into_ns(@ns.functions).each do |g| %>
-			<h5><%= g[0] %></h5>
-			<div class="functions">
-			<% g[1].each do |f| %>
-			<span class="function">
-				<%= link_to f[:name], 
-							:controller => 'main',
-							:action => 'function',
-							:lib => @library.url_friendly_name,
-							:version => params[:version],
-							:ns => @ns.name,
-							:function => f[:url_friendly_name] %>
-			</span>
-			<% end %>
-			</div>
-			<div class="clear"></div>
-		<% end%>
-	</div>
+        <%= render partial: 'function_list', object: @ns, locals: {lib: @library} %>
     <h3>Types in <%= params[:ns] %></h3>
     <div class="functions_list">
       <% group_into_ns(@ns.struct_types).each do |g| %>
@@ -89,11 +69,11 @@
           <span class="function">
                   <%= link_to f[:name], 
                                           :controller => 'main',
-                                          :action => 'function',
+                                          :action => 'type_class',
                                           :lib => @library.url_friendly_name,
                                           :version => params[:version],
                                           :ns => @ns.name,
-                                          :function => f[:url_friendly_name] || f[:name] %>
+                                          :type_class => f[:name] %>
           </span>
         <% end %>
         </div>

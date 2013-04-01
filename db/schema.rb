@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401152423) do
+ActiveRecord::Schema.define(:version => 20130401205926) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -83,11 +83,12 @@ ActiveRecord::Schema.define(:version => 20130401152423) do
     t.string   "shortdoc",          :limit => 70
     t.string   "version"
     t.string   "url_friendly_name"
-    t.integer  "namespace_id"
+    t.integer  "functional_id"
     t.tsvector "search_vector"
+    t.string   "functional_type"
   end
 
-  add_index "functions", ["namespace_id"], :name => "namespace_id_idx"
+  add_index "functions", ["functional_id"], :name => "namespace_id_idx"
   add_index "functions", ["search_vector"], :name => "functions_search_idx"
 
   create_table "libraries", :force => true do |t|
