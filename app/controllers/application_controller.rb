@@ -58,6 +58,10 @@ class ApplicationController < ActionController::Base
     
     recent
   end
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
   
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password

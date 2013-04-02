@@ -30,7 +30,7 @@ ClojuredocsPg::Application.routes.draw do
   match '/:lib/:version/:*ns' => 'main#ns', :constraints => { :version => /\d+\.[^\/]*/ }
   match '/:lib' => 'main#lib'
   match '/:lib/*ns/t/:type_class' => 'main#type_class', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]\w+/ }
-  match '/:lib/*ns/t/:type_class/:function' => 'main#type_class', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]\w+/ }
+  match '/:lib/*ns/t/:type_class/:function' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]\w+/ }
   match '/:lib/*ns/:function' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/, function: /[A-Z]\w+/ }
   match '/:lib/*ns' => 'main#ns'
   root :to => "main#index"

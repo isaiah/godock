@@ -91,7 +91,7 @@ $(document).ready(function() {
 	<div class="usage">
 		<ul>
           <% @type_class.arglists.each do |arglist| %>
-            <li><%= arglist %></li>
+            <li><%= arglist.html_safe %></li>
           <% end %>
 		</ul>
 	</div>

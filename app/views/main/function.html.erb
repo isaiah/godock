@@ -1,5 +1,5 @@
 
-<% content_for :title, " - #{@function.namespace.name}/#{@function.name}" %>
+<% content_for :title, " - #{@function.functional.name}/#{@function.name}" %>
 
 <script type="text/javascript" charset="utf-8">
 
@@ -16,7 +16,7 @@ $(document).ready(function() {
 </script>
 <div class="container_16">
 <div class="grid_3">
-	<%= render :partial => 'lib_nav', :locals => {:lib => @function.namespace.library} %>
+	<%= render :partial => 'lib_nav', :locals => {:lib => @function.library} %>
 	<%= render :partial => '/lib_namespaces' %>
 	&nbsp;
 </div>
@@ -77,10 +77,10 @@ $(document).ready(function() {
 	</h1>
 	<h2>
 		<span class="ns">
-			<%= link_to @function.namespace.name, :controller => "main", 
+			<%= link_to @function.ns.name, :controller => "main", 
 									  :action => "ns", 
 									  :lib => @function.library.url_friendly_name, 
-									  :ns => @function.namespace.name, 
+									  :ns => @function.ns.name, 
 									  :version => @function.library.version %>
 		</span>
 	</h2>
@@ -92,7 +92,7 @@ $(document).ready(function() {
 	<div class="usage">
 		<ul>
           <% @function.arglists.each do |arglist| %>
-            <li><%= arglist %></li>
+            <li><%= arglist.html_safe %></li>
           <% end %>
 		</ul>
 	</div>

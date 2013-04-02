@@ -26,7 +26,8 @@ class TypeClass < ActiveRecord::Base
   end
 
   def arglists
-    []
+    # FIXME legacy
+    arglists_comp.split("|")
   end
 
   def all_versions_examples

@@ -56,9 +56,22 @@ class Function < ActiveRecord::Base
   def update_weight
     self.weight = examples.count
   end
+
+  # is this a function in namespace?
+  def ns_func?
+    functional.class == Namespace
+  end
+
+  def ns
+    ns_func? ? functional : functional.namespace
+  end
   
   def href
-    "/#{library.url_friendly_name}/#{namespace.name}/#{url_friendly_name}"
+    if ns_func?
+      "/#{library.url_friendly_name}/#{ns.name}/#{name}"
+    else
+      "/#{library.url_friendly_name}/#{ns.name}/t/#{functional.name}/#{name}"
+    end
   end
   
   def library
@@ -73,10 +86,12 @@ class Function < ActiveRecord::Base
     Function.select('distinct(library),library').map(&:library).sort
   end
   
-  def self.versions_of(function)
-    Function.includes(:functional, {:functional => :library}).where(
-      :namespaces => {:name => function.namespace.name},
-      :libraries => {:name => function.library.name}, :name => function.name)
+  def self.versions_of(func)
+    ns_func_sql = "select * from functions left outer join namespaces on namespaces.id = functions.functional_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'Namespace' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.name = ?"
+    type_func_sql = "select * from functions left outer join type_classes on type_classes.id  = functions.functional_id left outer join namespaces on namespaces.id = type_classes.namespace_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'TypeClass' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.name = ? and type_classes.name = ?"
+    func.ns_func? ? 
+      self.find_by_sql([ns_func_sql, func.library.url_friendly_name, func.ns.name, func.name]) : 
+      self.find_by_sql([type_func_sql, func.library.url_friendly_name, func.ns.name, func.name, func.functional.name])
   end
 
   def link_opts(use_current_vs_actual_version = true)
@@ -107,5 +122,31 @@ class Function < ActiveRecord::Base
     end
     
     Function.where(:library => library, :ns => ns, :name => name, :version => stable_lib.version).first
+  end
+
+  def self.for_namespace(name, namespace, lib, version = nil)
+    sql = "select functions.id , functions.name , functions.doc, functions.arglists_comp, functions.functional_id, functions.functional_type, functions.source, functions.version from functions left outer join namespaces on namespaces.id  = functions.functional_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'Namespace' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.url_friendly_name = ?"
+    sql_with_version = sql + " and version = ?"
+    sql_without_version = sql + " and libraries.current = 't'"
+
+    functions = if version
+                   self.find_by_sql([sql_with_version, lib, namespace, name, version])
+                 else
+                   self.find_by_sql([sql_without_version, lib, namespace, name])
+                 end
+    functions.first
+  end
+
+  def self.for_type_class(name, type_class, namespace, lib, version = nil)
+    sql = "select functions.id , functions.name , functions.doc, functions.arglists_comp, functions.functional_id, functions.functional_type, functions.source, functions.version from functions left outer join type_classes on type_classes.id  = functions.functional_id left outer join namespaces on namespaces.id = type_classes.namespace_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'TypeClass' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.url_friendly_name = ? and type_classes.name = ?"
+    sql_with_version = sql + " and version = ?"
+    sql_without_version = sql + " and libraries.current = 't'"
+
+    functions = if version
+                   self.find_by_sql([sql_with_version, lib, namespace, name, type_class, version])
+                 else
+                   self.find_by_sql([sql_without_version, lib, namespace, name, type_class])
+                 end
+    functions.first
   end
 end

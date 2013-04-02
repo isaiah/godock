@@ -203,30 +203,11 @@ class MainController < ApplicationController
       type_class = params[:type_class]
       function_url_name = params[:function]
 
-      if type_class
-        sql = "select * from functions left outer join type_classes on type_classes.id  = functions.functional_id left outer join namespaces on namespaces.id = type_classes.namespace_id left outer join libraries where libraries.id = namespace.library_id where functions.functional_type = 'TypeClass' and libraries.url_friendly_name = ?"
-      end
-      
-      if version
-        sql = "select * from functions left outer join namespaces on namespaces.id = functions.functional_id left outer join libraries where libraries.id = namespace.library_id where functions.functional_type = 'Namespace' and libraries.url_friendly_name = ?"
-        @function = Function.includes(:functional, {:functional => :library}).where(
-          :functional => {:name => ns},
-          :libraries => {:url_friendly_name => lib_url_name, :version => version},
-          :functional_type => "Namespace",
-          :url_friendly_name => function_url_name).first
-      else
-        @function = Function.includes(:functional, {:functional => :library}).where(
-          :functional => {:name => ns},
-          :libraries => { :url_friendly_name => lib_url_name, :current => true},
-          :functional_type => "Namespace",
-          :url_friendly_name => function_url_name).first
-      end
-          
-      if not @function
-        logger.error "Couldn't find function id #{params[:id]}"
-
-        render :template => 'public/404.html', :layout => false, :status => 404
-      end
+      @function = if type_class
+                    Function.for_type_class(function_url_name, type_class, ns, lib_url_name, version)
+                  else
+                    Function.for_namespace(function_url_name, ns, lib_url_name, version)
+                  end || not_found
       
       @example = Example.new
       @comment = Comment.new
@@ -347,7 +328,7 @@ class MainController < ApplicationController
           @functions = @functions[0, 10]
         end
 
-        render :json => @functions.map{|f| {:href => f.href, :ns => f.namespace.name, :name => f.name, :examples => f.examples.size, :shortdoc => f.shortdoc }}
+        render :json => @functions.map{|f| {:href => f.href, :ns => f.ns.name, :name => f.name, :examples => f.examples.size, :shortdoc => f.shortdoc }}
       end
       
       def examples_style_guide
