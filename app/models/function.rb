@@ -4,7 +4,7 @@ class Function < ActiveRecord::Base
   belongs_to :functional, polymorphic: true
   belongs_to :struct
 
-  has_many :examples
+  has_many :examples, as: :examplable
   has_many :comments
   has_and_belongs_to_many :source_references, 
     :class_name => "Function", 
@@ -87,8 +87,8 @@ class Function < ActiveRecord::Base
   end
   
   def self.versions_of(func)
-    ns_func_sql = "select * from functions left outer join namespaces on namespaces.id = functions.functional_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'Namespace' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.name = ?"
-    type_func_sql = "select * from functions left outer join type_classes on type_classes.id  = functions.functional_id left outer join namespaces on namespaces.id = type_classes.namespace_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'TypeClass' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.name = ? and type_classes.name = ?"
+    ns_func_sql = "select functions.id , functions.name , functions.doc, functions.arglists_comp, functions.functional_id, functions.functional_type, functions.source, functions.version, functions.url_friendly_name from functions left outer join namespaces on namespaces.id = functions.functional_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'Namespace' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.name = ?"
+    type_func_sql = "select functions.id , functions.name , functions.doc, functions.arglists_comp, functions.functional_id, functions.functional_type, functions.source, functions.version, functions.url_friendly_name from functions left outer join type_classes on type_classes.id  = functions.functional_id left outer join namespaces on namespaces.id = type_classes.namespace_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'TypeClass' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.name = ? and type_classes.name = ?"
     func.ns_func? ? 
       self.find_by_sql([ns_func_sql, func.library.url_friendly_name, func.ns.name, func.name]) : 
       self.find_by_sql([type_func_sql, func.library.url_friendly_name, func.ns.name, func.name, func.functional.name])
@@ -104,9 +104,7 @@ class Function < ActiveRecord::Base
   end
   
   def all_versions_examples
-    Function.versions_of(self).reduce([]) do |coll, f|
-      coll + f.examples
-    end
+    Function.versions_of(self).map(&:examples).flatten
   end
   
   def all_versions_see_alsos

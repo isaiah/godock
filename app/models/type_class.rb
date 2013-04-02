@@ -1,6 +1,7 @@
 class TypeClass < ActiveRecord::Base
   attr_accessible :arglists_comp, :doc, :name, :namespace_id, :version
   has_many :functions, :dependent => :delete_all, as: :functional
+  has_many :examples, as: :examplable
   belongs_to :namespace
 
   def self.versions_of(type_class)
@@ -40,6 +41,10 @@ class TypeClass < ActiveRecord::Base
 
   def root_comments
     []
+  end
+
+  def ns_name
+    namespace.name
   end
 
 end

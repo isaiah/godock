@@ -26,6 +26,7 @@ gem 'chronic', '0.2.3'
 gem 'will_paginate'
 #gem 'levenshtein', '0.2.0'
 gem 'capistrano', '2.5.19'
+gem 'haml'
 
 group :development do
   gem 'pry'

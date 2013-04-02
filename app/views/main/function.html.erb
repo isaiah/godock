@@ -14,13 +14,13 @@ $(document).ready(function() {
 	})
 })
 </script>
-<div class="container_16">
+<div class="container_20">
 <div class="grid_3">
 	<%= render :partial => 'lib_nav', :locals => {:lib => @function.library} %>
 	<%= render :partial => '/lib_namespaces' %>
 	&nbsp;
 </div>
-<div class="grid_11">
+<div class="grid_12">
 	<% if not @function.library.current %>
 	<div class="version_warning">
 		You're viewing version <%= @function.version %> of <%= @function.name %>.  
@@ -90,11 +90,13 @@ $(document).ready(function() {
 	
 	<% if @function.arglists_comp.size > 0 %>
 	<div class="usage">
-		<ul>
-          <% @function.arglists.each do |arglist| %>
-            <li><%= arglist.html_safe %></li>
-          <% end %>
-		</ul>
+          <ul>
+            <% @function.arglists.each do |arglist| %>
+               <li>
+                 <pre><%= arglist.html_safe %></pre>
+               </li>
+            <% end %>
+          </ul>
 	</div>
 	<% end %>
 
@@ -118,18 +120,13 @@ $(document).ready(function() {
 			</a>
 			<a class="top scroll" href="#top">top</a>
 		</h3>
-		<% if @function.all_versions_examples.size == 0 %>
 		<ul id="var_examples">
+                  <% @function.all_versions_examples.each do |e| %>
+                    <li>
+                      <%= render :partial => '/examples/example', :locals => {:e => e } %>
+                    </li>
+                  <% end %>
 		</ul>
-		<% else %>
-		<ul id="var_examples">
-		<% @function.all_versions_examples.each do |e| %>
-			<li>
-				<%= render :partial => '/examples/example', :locals => {:e => e} %>
-			</li>
-		<% end %>
-		</ul>
-		<% end %>
 		<% if current_user %>
 		<div id="new_example" class="example">
 			<%= form_for @example do |f| %>
@@ -292,9 +289,22 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
-<div class="grid_3">
-	
-	&nbsp;
+<div class="grid_4 prefix_1">
+  <div class="lib_nav">
+    <h3>Related Methods</h3>
+  </div>
+  <h5>Functions</h5>
+  <ul>
+    <% @function.functional.functions.each do |f| %>
+      <li><%= link_to f.name, f.href %></lib>
+    <% end %>
+  </ul>
+  <h5>Types</h5>
+  <ul>
+    <% @function.functional.struct_types.each do |tc| %>
+      <li><%= tc.name %></lib>
+    <% end %>
+  </ul>
 </div>
 </div>
 

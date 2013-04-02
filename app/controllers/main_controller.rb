@@ -324,9 +324,9 @@ class MainController < ApplicationController
           f.library.current
         }
 
-        if @functions.size > 10
-          @functions = @functions[0, 10]
-        end
+        #if @functions.size > 10
+        #  @functions = @functions[0, 10]
+        #end
 
         render :json => @functions.map{|f| {:href => f.href, :ns => f.ns.name, :name => f.name, :examples => f.examples.size, :shortdoc => f.shortdoc }}
       end

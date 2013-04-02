@@ -7,13 +7,13 @@
 		})
 	})
 </script>
-<div class="container_16">
+<div class="container_20">
 <div class="grid_3">
 	<%= render :partial => 'lib_nav', :locals => {:lib => @library} %>
 	<%= render :partial => '/lib_namespaces' %>
 	&nbsp;
 </div>
-<div class="grid_10">
+<div class="grid_12">
 	<% if not @library.current %>
 	<div class="version_warning">
 		You're viewing version <%= @library.version %> of <%= @ns.name %>.  
@@ -81,7 +81,7 @@
       <% end%>
     </div>
 </div>
-<div class="grid_3">
+<div class="grid_5">
 	&nbsp;
 </div>
 </div>

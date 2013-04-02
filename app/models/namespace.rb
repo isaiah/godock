@@ -25,4 +25,8 @@ class Namespace < ActiveRecord::Base
      :version    => (use_current_vs_actual_version && library.current ? nil : library.version),
      :ns         => name}
   end
+
+  def ns_name
+    name
+  end
 end

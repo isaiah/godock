@@ -1,5 +1,5 @@
 <div class="example" id="example_<%= e.id %>">
-	<% if not (hide_controls rescue nil) %>
+	<% if (defined? hide_controls) && hide_controls %>
 	<div class="controls">
 		<a class="permalink" name="example_<%= e.id %>" href="#example_<%= e.id %>">link</a>
 		|
@@ -23,8 +23,9 @@
 	<% end %>
 	<div class="clear"></div>
 	<div class="content">
-	<pre class="brush: clojure"><%= e.body.gsub("<pre>", "").
-									 gsub("</pre>", "").gsub("<", "&lt;").gsub(">", "&gt;") %></pre>
+          <pre class="brush: go">
+            <%= e.body.html_safe %>
+          </pre>
 	</div>
 	<div class="hidden plain_content"><%= e.body.gsub("<", "&lt;").gsub(">", "&gt;") %></div>
 	<div class="clear"></div>

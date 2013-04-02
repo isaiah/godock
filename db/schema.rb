@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401205926) do
+ActiveRecord::Schema.define(:version => 20130402193827) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -55,14 +55,18 @@ ActiveRecord::Schema.define(:version => 20130401205926) do
 
   create_table "examples", :force => true do |t|
     t.text     "body"
-    t.integer  "function_id"
+    t.integer  "examplable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "version"
     t.integer  "user_id"
+    t.string   "examplable_type"
+    t.string   "name"
+    t.text     "doc"
+    t.text     "output"
   end
 
-  add_index "examples", ["function_id"], :name => "function_id_idx"
+  add_index "examples", ["examplable_id"], :name => "function_id_idx"
 
   create_table "function_references", :id => false, :force => true do |t|
     t.integer "from_function_id"
