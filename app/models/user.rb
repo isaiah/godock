@@ -24,11 +24,11 @@ class User < ActiveRecord::Base
   end
 
   def self.openid_required_fields
-    ["fullname", "email", "http://axschema.org/namePerson", "http://axschema.org/contact/email"]
+    ["nickname", "http://axschema.org/namePerson", "fullname"]
   end
 
   def self.openid_optional_fields
-    ["gender", "http://axschema.org/person/gender"]
+    ["email", "http://axschema.org/contact/email"]
   end
 
   def openid_fields=(fields)
@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
       end
 
       case key.to_s
-      when "fullname", "http://axschema.org/namePerson"
+      when "fullname", "http://axschema.org/namePerson", "nickname"
         self.login = value
       when "email", "http://axschema.org/contact/email"
         self.email = value
