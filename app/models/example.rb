@@ -1,5 +1,4 @@
 class Example < ActiveRecord::Base
-  acts_as_versioned
   belongs_to :examplable, polymorphic: true
   belongs_to :user
   

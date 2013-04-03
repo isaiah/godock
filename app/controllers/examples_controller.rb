@@ -1,9 +1,8 @@
 class ExamplesController < ApplicationController
-
-  layout "main"
-
   def new
-    
+  end
+
+  def create
     var_id = params[:var_id]
     body = params[:example][:body] rescue nil
     
@@ -39,10 +38,11 @@ class ExamplesController < ApplicationController
     render :json => {:success => true, 
                      :message => "Example added.", 
                      :example => {:body => @example.body,
-                                  :function_id => @example.function_id,
+                                  :function_id => @example.examplable_id,
                                   :id => @example.id,
                                   :user_id => @example.user_id},
                      :content => render_to_string(:partial => "example", :locals => {:e => @example})}
+
   end
   
   def update

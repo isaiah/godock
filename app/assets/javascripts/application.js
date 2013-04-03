@@ -6,6 +6,7 @@
 //= require jquery.ui.autocomplete
 //= require jquery.autocomplete.html.js
 //= require jquery.form
+//= require jquery.scrollTo-1.4.2-min
 //= require showdown
 //= require shBrushGo
 //= require jquery.qtip.min

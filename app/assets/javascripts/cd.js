@@ -5,8 +5,8 @@ CD.toCDMarkdown = function(text) {
 	var t = text
 	if(!t) t = ""
 
-	return CD.converter.makeHtml(t).replace(/<pre><code>/g, "<pre class=\"brush: clojure\">")
-	.replace(/<pre>/g, "<pre class=\"brush: clojure\">")
+	return CD.converter.makeHtml(t).replace(/<pre><code>/g, "<pre class=\"brush: go\">")
+	.replace(/<pre>/g, "<pre class=\"brush: go\">")
 	.replace(/<\/code><\/pre>/g, "</pre>")
 }
 
@@ -143,7 +143,7 @@ CD.Examples = function() {
 
 		function updatePreview() {
 			if(textarea.val()) {
-				preview.html("<pre class='brush: clojure'>" + textarea.val().replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</pre>")
+				preview.html("<pre class='brush: go'>" + textarea.val().replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</pre>")
 				SyntaxHighlighter.highlight(preview)
 			}
 		}
@@ -173,7 +173,7 @@ CD.Examples = function() {
 
 				example.find(".cancel").click(function(e) {
 					example.slideUp(function() {
-						example.find(".content").html("<pre class='brush: clojure'>" + plain_content.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</pre>")
+						example.find(".content").html("<pre class='brush: go'>" + plain_content.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</pre>")
 						example.find(".edit").css('display', 'inline')
 						example.removeClass("editing")
 						SyntaxHighlighter.highlight(example)
@@ -288,7 +288,7 @@ CD.Examples = function() {
 		var loader = $("#new_example .ajax_loader")
 
 		$("#new_example form").ajaxForm({
-			url: CD.ROOT_URL + "/examples/new",
+			url: CD.ROOT_URL + "/examples",
 			beforeSubmit: function() {
 				loader.css("display", "block")
 			},

@@ -22,9 +22,9 @@
 	</div>
 	<div class="clear"></div>
 	<div class="content">
-	<%= RDiscount.new(c.body).to_html.gsub("<pre><code>", "<pre class=\"brush: clojure\">").
+	<%= RDiscount.new(c.body).to_html.gsub("<pre><code>", "<pre class=\"brush: go\">").
 									 gsub("</code></pre>", "</pre>").
-									 gsub("<pre>", "<pre class=\"brush: clojure\">")%>
+									 gsub("<pre>", "<pre class=\"brush: go\">")%>
 	</div>
 	<div class="hidden plain_content"><%= c.body %></div>
 </div>
