@@ -363,8 +363,8 @@ CD.SeeAlsos = function() {
 	
 	function requestAddItem(from_var_id, to_var_fqn) {
 		params = {
-			var_id: from_var_id,
-			v: to_var_fqn
+			func: from_var_id,
+			see_also: to_var_fqn
 		}
 
 		$.getJSON("/see_also/add", params, function(data) {
@@ -465,7 +465,7 @@ CD.SeeAlsos = function() {
 						lbl += "<span class='ns'>" + v.ns + "/</span>"
 						lbl += "<span class='name'>" + v.name + "</span>"
 						lbl += "</div>"
-						out.push({label: lbl, value: v.ns + "/" + v.name, href: v.href})
+						out.push({label: lbl, value: v.id, href: v.href})
 					})
 
 					add(out)
@@ -480,6 +480,7 @@ CD.SeeAlsos = function() {
 				$("#var_name_search").val("")
 				return false
 			},
+      html: true,
 			dataType: "json"
 		})
 	}

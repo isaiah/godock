@@ -4,7 +4,6 @@ class SeeAlsoController < ApplicationController
     
     if not current_user
       render json_fail("No valid user session.")
-      return
     end
     
     id = (params[:id] || 0)
@@ -13,26 +12,22 @@ class SeeAlsoController < ApplicationController
     # bad id passed
     if not sa
       render json_fail("Couldn't find that see also.")
-      return
     end
     
     # creator of see also is current user
     if sa.user == current_user
       render json_fail("You can't vote on your own see also.")
-      return false
     end
     
     # current user already voted
     if sa.has_voted?(current_user)
       render json_fail("Current user has already voted.")
-      return
     end
     
     vote_action = params[:vote_action]
     # no vote action
     if not vote_action
       render json_fail("No vote action found.")
-      return
     end
     
     direction = (vote_action == "vote_up")    
@@ -49,19 +44,14 @@ class SeeAlsoController < ApplicationController
     
     if not q
       render :json => []
-      return
     end
     
     name = q + "%"
     
     #@functions = Function.find(:all, :conditions => ['name like ? and version = ?', name, version]).sort{|a,b| Levenshtein.distance(q, a.name) <=> Levenshtein.distance(q, b.name)}.uniq
-    @functions = Function.find(:all, :conditions => ['name like ? and version = ?', name, version]).uniq
+    @functions = Function.find(:all, :conditions => ['name ilike ? and version = ?', name, version]).uniq
     
-    if @functions.size > 10
-      @functions = @functions[0, 10]
-    end
-    
-    render :json => @functions.map{|f| {:href => f.href, :ns => f.namespace.name, :name => f.name, :examples => f.examples.size, :shortdoc => f.shortdoc }}
+    render :json => @functions.map{|f| {id: f.id, :href => f.href, :ns => f.ns.name, :name => f.name}}
   end
   
   def delete
@@ -69,23 +59,19 @@ class SeeAlsoController < ApplicationController
     
     if not id
       render json_fail "No see also specified to delete."
-      return
     end
     
     sa = SeeAlso.find_by_id(id)
     if not sa
       render json_fail "No see also found."
-      return
     end
     
     if not sa.user == current_user
       render json_fail "You don't own that see also."
-      return
     end
     
     if not sa.delete
       render json_fail "Unknown error deleting that see also."
-      return
     end
     
     render :json => {:success => true}
@@ -94,60 +80,43 @@ class SeeAlsoController < ApplicationController
   def add
     
     if not current_user
-      redner json_fail "Must be logged in to add see alsos."
-      return
+      render json_fail "Must be logged in to add see alsos."
     end
     
-    id = params[:var_id]
+    id = params[:func]
     from_var = Function.find_by_id(id)
     
     if not from_var
       render json_fail "Couldn't find from var."
-      return
     end
-    
-    to_var_fqn = params[:v]
-    if not to_var_fqn
+       
+    to_func_id = params[:see_also]
+    if not to_func_id
       render json_fail "To var not specified."
-      return
-    end
-    
-    split = to_var_fqn.split("/")
-    ns = split[0]
-    name = split[1]
-
-    to_var = Function.find(:first, :include => [:namespace],
-                           :conditions => {:namespaces => {:name => ns}, :name => name})
-    
-    if not to_var
-      render json_fail("Couldn't find to var.")
-      return
     end
     
     #if see also already exists between the two vars
-    if from_var.see_alsos.map{|s| s.to_function}.index(to_var)
+    if from_var.see_alsos.map(&:to_id).index(to_func_id)
       render json_fail "See also already exists."
-      return
     end
 
-    sa = SeeAlso.new
-    sa.user = current_user
-    sa.to_function = to_var
-    from_var.see_alsos << sa
-    from_var.save
+    if not to_var = Function.find(to_func_id)
+      render json_fail "See also function doens't exist."
+    end
+
+    sa = SeeAlso.new(user:current_user, to_id: to_func_id, from_id: id)
+    sa.save
     
     render :json => {
       :success => true, 
       :to_var => {
         :sa_id => sa.id, 
         :name => to_var.name, 
-        :ns => to_var.namespace.name, 
+        :ns => to_var.ns.name, 
         :href => to_var.href, 
         :shortdoc => to_var.shortdoc
       },
       :content => render_to_string(:partial => "see_also_content", :locals => {:sa => sa})
     }
-    
   end
-  
 end

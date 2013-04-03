@@ -134,7 +134,7 @@ $(document).ready(function() {
 			<%= form_for @example do |f| %>
 			Example Content <span class="instructions">(code only, do not wrap in &lt;pre&gt; tags. See <a href="/examples_style_guide">style guide</a> for more information.)</span>
 			<div class="examples_license">
-				Examples submitted to clojuredocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
+				Examples submitted to godocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
 			</div>
 			<%= image_tag "ajax-loader.gif", :class => "ajax_loader" %>
 			<div class="clear"></div>
@@ -200,7 +200,7 @@ $(document).ready(function() {
 
 		</h3>
 		<div class="source_content">
-			<pre class="brush: clojure"><%= @type_class.source %></pre>
+			<pre class="brush: go"><%= @type_class.source %></pre>
 			<div class="copyright_license">
 				<%= @library.copyright %>
 
@@ -275,7 +275,7 @@ $(document).ready(function() {
 				<%= f.submit 'Add comment'%>
 			</div>
 			<div class="copyright_license">
-				Comments submitted to clojuredocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
+				Comments submitted to godocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
 			</div>
 			<input type="hidden" name="iscomment" value="true">
 			<% end %>

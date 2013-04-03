@@ -16,14 +16,14 @@ belongs_to_user = current_user && (current_user == sa.user)
 		<% end %>
 	</div>
 	
-	<%= link_to "<span class='ns'>#{f.namespace.name}/</span><span class='name'>#{f.name}</span>", 
+	<%= link_to "<span class='ns'>#{f.ns.name}/</span><span class='name'>#{f.name}</span>".html_safe, 
 				:controller => 'main',
 				:action => 'function',
 				:lib => lib.url_friendly_name,
 				:version => nil,
-				:ns => f.namespace.name,
+				:ns => f.ns.name,
 				:function => f.url_friendly_name %>
 				
-	<p class="shortdoc"><%= f.shortdoc %></p>
+	<p class="shortdoc"><%= f.arglists_comp %></p>
 	<div class="clear"></div>
 </div>

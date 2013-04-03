@@ -161,23 +161,23 @@ $(document).ready(function() {
 	</div>
 	
 	<div class="see_alsos">
-		<h3>See Also <a class="top scroll" href="#top">top</a></h3>
+          <h3>See Also <a class="top scroll" href="#top">top</a></h3>
 
-		<ul>
-			<% @function.all_versions_see_alsos.each do |sa| %>
-			<li class="see_also_item" id="see_also_item_<%=sa.id%>">
-				<%= render :partial => "/see_also/see_also_content", :locals => {:sa => sa} %>
-			</li>
-			<% end %>
-		</ul>
-		<% if current_user %>
-		<div id="new_see_also">
-			<%= text_field_tag :var_name_search %>
-		</div>
-		<% else %>
-		Log in to add a see also.
-		<% end %>
-		<div class="clear"></div>
+          <ul>
+            <% @function.all_versions_see_alsos.each do |sa| %>
+              <li class="see_also_item" id="see_also_item_<%=sa.id%>">
+                <%= render :partial => "/see_also/see_also_content", :locals => {:sa => sa} %>
+              </li>
+            <% end %>
+          </ul>
+          <% if current_user %>
+          <div id="new_see_also">
+            <%= text_field_tag :var_name_search %>
+          </div>
+          <% else %>
+            Log in to add a see also.
+          <% end %>
+          <div class="clear"></div>
 	</div>
 	<% if @function.source %>
 	<div class="source">

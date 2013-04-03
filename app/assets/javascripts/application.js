@@ -17,4 +17,36 @@ $(function() {
         //SyntaxHighlighter.all();
 });
 
+$(document).ready(function() {
+	$("#main_search").autocomplete({
+		source: function(req, add) {
+			$.getJSON("/search_autocomplete", req, function(data) {
+				var out = []
+				$.each(data, function(i, v) {
+					var lbl = "<div class=\"ac_search_result\">"
+					lbl += "<span class='name'>" + v.name + "</span>"
+					lbl += "<span class='ns'>" + v.ns + "</span>"
+					lbl += "<br />"
+					lbl += "<span class='shortdoc'>" + v.shortdoc + "</span>"
+					lbl += "</div>"
+					out.push({label: lbl, value: v.name, href: v.href})
+				});
+				add(out);
+			});
+		},
+		focus: function(event, ui) {
+			return false
+		},
+		select: function(event, ui) {
+			window.location.href = ui.item.href
+			return false
+		},
+    position: {
+          my: "right: top", at: "right bottom"
+    },
+    minLength: 2,
+    html: true,
+		dataType: "json"
+	});
+});
 
