@@ -1,0 +1,26 @@
+<div class="lib_nav">
+  <h3>Index</h3>
+</div>
+<h6>Functions(<%= namespace_index.functions.count %>)</h6>
+<ul>
+  <% namespace_index.functions.each do |f| %>
+    <li><%= link_to f.name, f.href %></lib>
+  <% end %>
+</ul>
+<h6>Types(<%= namespace_index.namespace.struct_types.size %>)</h6>
+<div class="namespaces">
+  <ul>
+    <% namespace_index.namespace.struct_types.each do |tc| %>
+      <li>
+        <span><%= tc.name %></span>
+        <ul>
+          <% tc.functions.each do |f| %>
+            <li>
+              <span><%= link_to f.name, f.href %></span>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+</div>
