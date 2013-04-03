@@ -29,4 +29,9 @@ class Namespace < ActiveRecord::Base
   def ns_name
     name
   end
+
+  # To be compatible with TypeClass
+  def namespace
+    self
+  end
 end

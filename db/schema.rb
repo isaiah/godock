@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130402193827) do
+ActiveRecord::Schema.define(:version => 20130403090017) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -188,10 +188,10 @@ ActiveRecord::Schema.define(:version => 20130402193827) do
 
   create_table "users", :force => true do |t|
     t.string   "login"
-    t.string   "email",                                  :null => false
+    t.string   "email"
     t.string   "crypted_password"
     t.string   "password_salt"
-    t.string   "persistence_token",                      :null => false
+    t.string   "persistence_token"
     t.integer  "login_count",            :default => 0,  :null => false
     t.integer  "failed_login_count",     :default => 0,  :null => false
     t.datetime "last_request_at"
@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(:version => 20130402193827) do
     t.string   "last_login_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "openid_identifier"
+    t.string   "identity_url"
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -214,7 +214,8 @@ ActiveRecord::Schema.define(:version => 20130402193827) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["openid_identifier"], :name => "index_users_on_openid_identifier"
+  add_index "users", ["identity_url"], :name => "index_users_on_identity_url", :unique => true
+  add_index "users", ["identity_url"], :name => "index_users_on_openid_identifier"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "votes", :force => true do |t|

@@ -1,5 +1,5 @@
 ClojuredocsPg::Application.routes.draw do
-  devise_for :users, :path => "", :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'cmon_let_me_in' }
+  devise_for :users, :path => "", :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'cmon_let_me_in' }, :controllers => { :sessions => "sessions" }
 
   match '/examples_style_guide' => 'main#examples_style_guide'
   match '/profile/:login' => 'user#profile'
@@ -26,8 +26,8 @@ ClojuredocsPg::Application.routes.draw do
   match '/management/:lib' => 'management#index'
   match '/:lib/:version' => 'main#lib', :constraints => { :version => /\d+\.[^\/]*/ }
   match '/:lib/:version/*ns/t/:type_class' => 'main#type_class', constraints: { :version => /\d+\.[^\/]*/, ns: /\w+(\/\w+)*?/, type_class: /[A-Z]\w+/ }
-  match '/:lib/:version/:*ns/:function' => 'main#function', :constraints => { :version => /\d+\.[^\/]*/ }
-  match '/:lib/:version/:*ns' => 'main#ns', :constraints => { :version => /\d+\.[^\/]*/ }
+  match '/:lib/:version/*ns/:function' => 'main#function', :constraints => { :version => /\d+\.[^\/]*/ }
+  match '/:lib/:version/*ns' => 'main#ns', :constraints => { :version => /\d+\.[^\/]*/ }
   match '/:lib' => 'main#lib'
   match '/:lib/*ns/t/:type_class' => 'main#type_class', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]\w+/ }
   match '/:lib/*ns/t/:type_class/:function' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]\w+/ }

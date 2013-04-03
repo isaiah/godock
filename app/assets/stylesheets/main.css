@@ -770,8 +770,12 @@ span.version {
 	margin-bottom: 0px;
 }
 
-.namespaces li {
+.namespaces ul li ul li {
 	margin-left: 10px;
+}
+
+.namespaces ul.root li {
+	margin-left: 0px;
 }
 
 .quick_ref h2, .quick_ref h3, .quick_ref h4, .quick_ref h5 {

@@ -31,29 +31,29 @@
 </script>
 
 <div class="header">
-	<div class="container_20">
-	<div class="header_content">
-		<div class="user_area">
-				<div class="grid_20">
-            <span class="main_nav">
+  <div class="container_20">
+    <div class="header_content">
+      <div class="user_area">
+        <div class="grid_20">
+          <span class="main_nav">
             <a href="/quickref/overtone">quick ref</a>
             &nbsp;
             <a href="http://github.com/zkim/clojuredocs">github</a>
-            </span>
+          </span>
             &nbsp;
             &nbsp;
-				  <span class="user_area_content">
-				    <% if current_user %>
-				      <%= image_tag(grav_url_for(current_user.email, 16), :class => 'user_area_gravatar') %>
-				      Logged in as <%= link_to current_user.login, :controller => 'user', :action => 'profile', :login => current_user.login %>
-				      |
-				      <a href="/logout">logout</a>
-				    <% else %>
-				      <a href="/login" id="login">login / sign up</a>
-				      <% end%>
-				  </span>
-				</div>
-			<div class="clear"></div>
+          <span class="user_area_content">
+              <% if current_user %>
+                <%= image_tag(grav_url_for(current_user.email, 16), :class => 'user_area_gravatar') %>
+                Logged in as <%= link_to current_user.email, :controller => 'user', :action => 'profile', :login => current_user.email %>
+                |
+                <a href="/logout">logout</a>
+              <% else %>
+                <a href="/login" id="login">login / sign up</a>
+              <% end%>
+          </span>
+        </div>
+        <div class="clear"></div>
 		</div>
 		<div class="grid_3">
 		  <%= image_tag "golang.png", :class => 'cd_logo' %>

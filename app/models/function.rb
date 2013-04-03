@@ -124,7 +124,7 @@ class Function < ActiveRecord::Base
 
   def self.for_namespace(name, namespace, lib, version = nil)
     sql = "select functions.id , functions.name , functions.doc, functions.arglists_comp, functions.functional_id, functions.functional_type, functions.source, functions.version from functions left outer join namespaces on namespaces.id  = functions.functional_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'Namespace' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.url_friendly_name = ?"
-    sql_with_version = sql + " and version = ?"
+    sql_with_version = sql + " and functions.version = ?"
     sql_without_version = sql + " and libraries.current = 't'"
 
     functions = if version
@@ -137,7 +137,7 @@ class Function < ActiveRecord::Base
 
   def self.for_type_class(name, type_class, namespace, lib, version = nil)
     sql = "select functions.id , functions.name , functions.doc, functions.arglists_comp, functions.functional_id, functions.functional_type, functions.source, functions.version from functions left outer join type_classes on type_classes.id  = functions.functional_id left outer join namespaces on namespaces.id = type_classes.namespace_id left outer join libraries on libraries.id = namespaces.library_id where functions.functional_type = 'TypeClass' and libraries.url_friendly_name = ? and namespaces.name = ? and functions.url_friendly_name = ? and type_classes.name = ?"
-    sql_with_version = sql + " and version = ?"
+    sql_with_version = sql + " and functions.version = ?"
     sql_without_version = sql + " and libraries.current = 't'"
 
     functions = if version

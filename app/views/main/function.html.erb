@@ -260,7 +260,7 @@ $(document).ready(function() {
 			<div class="author">
 				<img src="<%= grav_url_for(current_user.email, 25) %>" />
 				<span class="author_nickname">
-					<%= link_to current_user.login, :controller => 'user', :action => 'profile', :login => current_user.login %>
+					<%= link_to current_user.email, :controller => 'user', :action => 'profile', :login => current_user.email %>
 				</span>
 			</div>
 			<div class="clear"></div>
@@ -273,7 +273,7 @@ $(document).ready(function() {
 				<%= f.submit 'Add comment'%>
 			</div>
 			<div class="copyright_license">
-				Comments submitted to clojuredocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
+				Comments submitted to godocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
 			</div>
 			<input type="hidden" name="iscomment" value="true">
 			<% end %>
@@ -291,21 +291,30 @@ $(document).ready(function() {
 </div>
 <div class="grid_4 prefix_1">
   <div class="lib_nav">
-    <h3>Related Methods</h3>
+    <h3>Index</h3>
   </div>
-  <h5>Functions</h5>
+  <h6>Functions(<%= @function.functional.functions.count %>)</h6>
   <ul>
     <% @function.functional.functions.each do |f| %>
       <li><%= link_to f.name, f.href %></lib>
     <% end %>
   </ul>
-  <h5>Types</h5>
-  <ul>
-    <% @function.functional.struct_types.each do |tc| %>
-      <li><%= tc.name %></lib>
-    <% end %>
-  </ul>
+  <h6>Types(<%= @function.functional.namespace.struct_types.size %>)</h6>
+  <div class="namespaces">
+    <ul>
+      <% @function.functional.namespace.struct_types.each do |tc| %>
+        <li>
+          <span><%= tc.name %></span>
+          <ul>
+            <% tc.functions.each do |f| %>
+              <li>
+                <span><%= link_to f.name, f.href %></span>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
 </div>
-
-
