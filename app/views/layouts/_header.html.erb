@@ -13,7 +13,6 @@
 						lbl += "</div>"
 						out.push({html: true, label: lbl, value: v.name, href: v.href})
 					})
-					
 					add(out)
 				})
 			},
@@ -24,6 +23,10 @@
 				window.location.href = ui.item.href
 				return false
 			},
+                        position: {
+                              my: "right: top", at: "right bottom"
+                        },
+                        minLength: 2,
                         html: true,
 			dataType: "json"
 		})

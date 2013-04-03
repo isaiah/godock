@@ -1,7 +1,6 @@
 /*
  *= require jquery.ui.core
- *= require jquery.ui.theme
- *= require jquery.ui.autocomplete
+ *= require jquery.autocomplete
  *= require_tree .
  */
 
@@ -25,3 +24,4 @@ code, pre {
     font-size: 12px;
     padding: 0 3px 2px;
 }
+.ui-autocomplete { position: absolute; }

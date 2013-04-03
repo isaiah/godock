@@ -59,29 +59,8 @@
 		</div>
 	</div>
 	<% end %>
-        <%= render partial: 'function_list', object: @ns, locals: {lib: @library} %>
-    <h3>Types in <%= params[:ns] %></h3>
-    <div class="functions_list">
-      <% group_into_ns(@ns.struct_types).each do |g| %>
-        <h5><%= g[0] %></h5>
-        <div class="functions">
-        <% g[1].each do |f| %>
-          <span class="function">
-                  <%= link_to f[:name], 
-                                          :controller => 'main',
-                                          :action => 'type_class',
-                                          :lib => @library.url_friendly_name,
-                                          :version => params[:version],
-                                          :ns => @ns.name,
-                                          :type_class => f[:name] %>
-          </span>
-        <% end %>
-        </div>
-        <div class="clear"></div>
-      <% end%>
-    </div>
 </div>
-<div class="grid_5">
-	&nbsp;
+<div class="grid_4 prefix_1">
+  <%= render partial: "namespace_index", object: @ns %>
 </div>
 </div>
