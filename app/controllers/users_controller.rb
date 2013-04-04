@@ -20,8 +20,16 @@ class UsersController < ApplicationController
   end
 
   def new
+    @user = User.find_by_identity_url(params[:identity_url])
   end
 
-  def create
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(params[:user])
+      sign_in(:user, @user, force: true)
+      redirect_to root_path
+    else
+      render "new"
+    end
   end
 end

@@ -1,0 +1,18 @@
+<div class="container_16">
+  <div class="grid_16">
+    <h2>Create a new GoDocs user</h2>
+    <p>We couldn't find a GoDocs account based on your OpenID provider url you entered (<%= @user.identity_url %>). If this is your first time logging into the site, please enter a nickname and email to use when adding / updating content on GoDocs below:</p>
+
+    <%= form_for @user do |f| %>
+      <p>
+        <%= f.label :login, 'Nickname' %><br />
+        <%= f.text_field :login %>
+      </p>
+      <p>
+        <%= f.label :email %><br />
+        <%= f.text_field :email %>
+      </p>
+      <%= f.submit 'Create Account'%>
+    <% end %>
+  </div>
+</div>

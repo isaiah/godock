@@ -13,9 +13,9 @@
           <span class="user_area_content">
               <% if current_user %>
                 <%= image_tag(grav_url_for(current_user.email, 16), :class => 'user_area_gravatar') %>
-                Logged in as <%= link_to current_user.login, :controller => 'user', :action => 'profile', :login => current_user.login %>
+                Logged in as <%= link_to current_user.login, :controller => 'users', :action => 'profile', :login => current_user.login %>
                 |
-                <a href="/logout">logout</a>
+                <%= link_to "logout", "/logout", method: :delete%>
               <% else %>
                 <a href="/login" id="login">login / sign up</a>
               <% end%>
