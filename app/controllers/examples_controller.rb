@@ -41,7 +41,7 @@ class ExamplesController < ApplicationController
                                   :function_id => @example.examplable_id,
                                   :id => @example.id,
                                   :user_id => @example.user_id},
-                     :content => render_to_string(:partial => "example", :locals => {:e => @example})}
+                     :content => render_to_string(:partial => "example", :object => @example})}
 
   end
   

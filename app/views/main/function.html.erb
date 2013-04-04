@@ -9,8 +9,8 @@ $(document).ready(function() {
 		varId: <%= @function.id %>,
 		library: "<%= @function.library.name %>",
 		version: "<%= @function.library.version %>",
-		editExampleFormHTML: '<%= escape_javascript(render :partial => '/examples/edit_example_form').gsub("\n", "")%>',
-		editCommentFormHTML: '<%= escape_javascript(render :partial => '/comments/edit_comment_form').gsub("\n", "")%>',
+		editExampleFormHTML: '<%= escape_javascript(render :partial => 'examples/edit_example_form').gsub("\n", "")%>',
+		editCommentFormHTML: '<%= escape_javascript(render :partial => 'comments/edit_comment_form').gsub("\n", "")%>',
 	})
 })
 </script>
@@ -72,17 +72,15 @@ $(document).ready(function() {
 	</div>
 	<div class="clear"></div>
 	<div class="function_header">
-	<h1>
-		<%= @function.name %>
-	</h1>
+	<h1><%= @function.name %></h1>
 	<h2>
-		<span class="ns">
-			<%= link_to @function.ns.name, :controller => "main", 
-									  :action => "ns", 
-									  :lib => @function.library.url_friendly_name, 
-									  :ns => @function.ns.name, 
-									  :version => @function.library.version %>
-		</span>
+          <span class="ns">
+            <%= link_to @function.ns.name, :controller => "main", 
+                                           :action => "ns", 
+                                           :lib => @function.library.url_friendly_name, 
+                                           :ns => @function.ns.name, 
+                                           :version => @function.library.version %>
+          </span>
 	</h2>
 	
 	<div class="clear"></div>
@@ -113,52 +111,7 @@ $(document).ready(function() {
 	</div>
 	<% end %>
 	
-	<div class="examples">
-		<h3>
-			<a class="internal_nav scroll" href="#examples" name="examples">
-				<span id="examples_count"><%= @function.all_versions_examples.size %></span> <span id="examples_desc">Example<% if @function.all_versions_examples.size != 1 then %>s<% end %></span>
-			</a>
-			<a class="top scroll" href="#top">top</a>
-		</h3>
-		<ul id="var_examples">
-                  <% @function.all_versions_examples.each do |e| %>
-                    <li>
-                      <%= render :partial => '/examples/example', :locals => {:e => e } %>
-                    </li>
-                  <% end %>
-		</ul>
-		<% if current_user %>
-		<div id="new_example" class="example">
-                        <%= form_for @example, html: {id: "new_example_form"} do |f| %>
-			Example Content <span class="instructions">(code only, do not wrap in &lt;pre&gt; tags. See <a href="/examples_style_guide">style guide</a> for more information.)</span>
-			<div class="examples_license">
-				Examples submitted to godocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
-			</div>
-			<%= image_tag "ajax-loader.gif", :class => "ajax_loader" %>
-			<div class="clear"></div>
-			<%= f.text_area :body %>
-			<div style="text-align: right">
-				<a class="cancel" href="" style="float: left">Cancel</a>
-				<!-- <input class="preview_example" type="button" value="Preview" /> -->
-				<%= f.submit 'Add example' %>
-			</div>
-			<input type="hidden" name="isexample" value="true" />
-			<input type="hidden" name="var_id" value="<%= @function.id %>" />
-			<% end %>
-			<fieldset class="live_preview">
-				<legend>Live Preview</legend>
-				<div class="preview">
-				</div>
-			</fieldset>
-		</div>
-		<% end %>
-		
-		<% if current_user %>
-			<a href="" id="add_new_example">Add an example.</a>
-		<% else %>
-			Log in to add / edit an example.
-		<% end %>	
-	</div>
+        <%= render partial: 'examples', locals: {examplable: @function } %>
 	
 	<div class="see_alsos">
           <h3>See Also <a class="top scroll" href="#top">top</a></h3>
@@ -232,61 +185,14 @@ $(document).ready(function() {
 	<% end %>
 	
 	<div class="comments">
-		<h3><a class="internal_nav scroll" href="#comments" name="comments">Comments</a> <a class="top scroll" href="#top">top</a></h3>
-		<% if @function.root_comments.size == 0 %>
-			<h4>
-				No comments for <em><%= @function.name %></em>.
-				<% if current_user %>
-					<a href="" id="add_comment">Add a comment</a>.
-				<% else %>
-					Log in to add a comment.
-				<% end %>
-			</h4>
-		<% else %>
-			<h4><%= @function.root_comments.size %> comment(s) for <em><%= @function.name %></em>.</h4>
-		<% end %>
-		<% @function.root_comments.each do |c| %>
-		<%= render :partial => '/comments/comment', :locals => {:c => c} %>
-		<% end %>
-		<% if @function.root_comments.size != 0 %>
-			<% if current_user %>
-				<h4><a href="" id="add_comment">Add a comment</a>.</h4>
-			<% else %>
-				Log in to add a comment.
-			<% end %>
-		<% end %>
-		<% if current_user %>
-		<div id="new_comment" class="comment">
-			<div class="author">
-				<img src="<%= grav_url_for(current_user.email, 25) %>" />
-				<span class="author_nickname">
-					<%= link_to current_user.email, :controller => 'user', :action => 'profile', :login => current_user.email %>
-				</span>
-			</div>
-			<div class="clear"></div>
-                        <%= form_for @comment, html: {id: "new_comment_form"} do |f| %>
-			Example <span class="instructions">(markdown allowed, code in &lt;pre /&gt;)</span><br />
-			<%= f.text_area :body %>
-			<div style="text-align: right">
-				<a class="cancel" href="" style="float: left">Cancel</a>
-				<!-- <input class="preview_comment" type="button" value="Preview" /> -->
-				<%= f.submit 'Add comment'%>
-			</div>
-			<div class="copyright_license">
-				Comments submitted to godocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
-			</div>
-			<input type="hidden" name="iscomment" value="true">
-			<% end %>
-			
-			<fieldset class="live_preview">
-				<legend>Live Preview</legend>
-				<div class="preview">
-				</div>
-			</fieldset>
-		</div>
-		<% end %>
-		<div class="hidden" id="preview_window">
-		</div>
+          <h3><a class="internal_nav scroll" href="#comments" name="comments"><%= pluralize @function.root_comments.size, "Comment" %></a> <a class="top scroll" href="#top">top</a></h3>
+          <%= render partial: 'comments/comment', collection: @function.root_comments %>
+          <% if current_user %>
+                  <h4><a href="" id="add_comment">Add a comment</a>.</h4>
+          <% else %>
+                  Log in to add a comment.
+          <% end %>
+          <%= render partial: 'comment_form', locals: {commentable: @function} %>
 	</div>
 </div>
 <div class="grid_4 prefix_1">

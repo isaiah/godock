@@ -2,7 +2,10 @@ class TypeClass < ActiveRecord::Base
   attr_accessible :arglists_comp, :doc, :name, :namespace_id, :version
   has_many :functions, :dependent => :delete_all, as: :functional
   has_many :examples, as: :examplable
+  has_many :comments
+
   belongs_to :namespace
+  acts_as_commentable
 
   def self.versions_of(type_class)
     self.includes(:namespace, {:namespace => :library}).where(
@@ -36,10 +39,6 @@ class TypeClass < ActiveRecord::Base
   end
 
   def all_versions_see_alsos
-    []
-  end
-
-  def root_comments
     []
   end
 

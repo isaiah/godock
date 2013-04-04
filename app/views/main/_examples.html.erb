@@ -1,0 +1,43 @@
+<div class="examples">
+        <h3>
+                <a class="internal_nav scroll" href="#examples" name="examples">
+                        <span id="examples_count"><%= pluralize examplable.all_versions_examples.size, "Example" %></span></span>
+                </a>
+                <a class="top scroll" href="#top">top</a>
+        </h3>
+        <ul id="var_examples">
+          <%= render :partial => 'examples/example', collection: examplable.all_versions_examples %>
+        </ul>
+        <% if current_user %>
+        <div id="new_example" class="example">
+                <%= form_for Example.new, html: {id: "new_example_form"} do |f| %>
+                Example Content <span class="instructions">(code only, do not wrap in &lt;pre&gt; tags. See <a href="/examples_style_guide">style guide</a> for more information.)</span>
+                <div class="examples_license">
+                        Examples submitted to godocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
+                </div>
+                <%= image_tag "ajax-loader.gif", :class => "ajax_loader" %>
+                <div class="clear"></div>
+                <%= f.text_area :body %>
+                <%= f.hidden_field :examplable_id, value: examplable.id %>
+                <%= f.hidden_field :examplable_type, value: examplable.class %>
+
+                <div style="text-align: right">
+                        <a class="cancel" href="" style="float: left">Cancel</a>
+                        <!-- <input class="preview_example" type="button" value="Preview" /> -->
+                        <%= f.submit 'Add example' %>
+                </div>
+                <% end %>
+                <fieldset class="live_preview">
+                        <legend>Live Preview</legend>
+                        <div class="preview">
+                        </div>
+                </fieldset>
+        </div>
+        <% end %>
+        
+        <% if current_user %>
+                <a href="" id="add_new_example">Add an example.</a>
+        <% else %>
+                Log in to add / edit an example.
+        <% end %>	
+</div>

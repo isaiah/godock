@@ -1,22 +1,20 @@
-<div class="example" id="example_<%= e.id %>">
+<li>
+<div class="example" id="example_<%= example.id %>">
 	<% if (defined? hide_controls) && hide_controls %>
 	<div class="controls">
-		<a class="permalink" name="example_<%= e.id %>" href="#example_<%= e.id %>">link</a>
+		<a class="permalink" name="example_<%= example.id %>" href="#example_<%= example.id %>">link</a>
 		|
-		<%= link_to 'changes', {:controller => 'examples', :action => 'view_changes', :id => e.id}, :class => 'view_changes' %>
+		<%= link_to 'changes', {:controller => 'examples', :action => 'view_changes', :id => example.id}, :class => 'view_changes' %>
 		<% if current_user %>
 			|
-		  <a href="#" class="edit" id="edit_<%= e.id %>">
+		  <a href="#" class="edit" id="edit_<%= example.id %>">
 			<!-- <%= image_tag "pen_alt_fill_12x12.png", :alt => "edit", :title => "edit", :width => 12, :height => 12 %> -->
 			edit
 		  </a> 
 			
-			<% if e.belongs_to?(current_user) %>
+			<% if example.user == current_user %>
 			|
-			<%= link_to 'delete', 
-						{:controller => "examples", :action => "delete", :id => e.id}, 
-						:id => "delete_#{e.id}",
-						:class => "delete"%>
+                        <%= link_to 'delete', example, method: :delete, class: "delete" %>
 			<% end %>
 		<% end %>
 	</div>
@@ -24,9 +22,10 @@
 	<div class="clear"></div>
 	<div class="content">
           <pre class="brush: go">
-            <%= e.body.html_safe %>
+            <%= example.body.html_safe %>
           </pre>
 	</div>
-	<div class="hidden plain_content"><%= e.body.gsub("<", "&lt;").gsub(">", "&gt;") %></div>
+	<div class="hidden plain_content"><%= example.body.gsub("<", "&lt;").gsub(">", "&gt;") %></div>
 	<div class="clear"></div>
 </div>
+</li>

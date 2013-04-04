@@ -1,30 +1,25 @@
-<div class="comment" id="comment_<%= c.id %>">
+<div class="comment" id="comment_<%= comment.id %>">
 	<div class="comment_header">
 		<div class="author">
-			<img src="<%= grav_url_for(c.user.email, 25) %>" />
+			<img src="<%= grav_url_for(comment.user.email, 25) %>" />
 			<span class="author_nickname">
-				<%= link_to c.user.login, :controller => 'user', :action => 'profile', :login => c.user.login %>
+				<%= link_to comment.user.login, :controller => 'users', :action => 'profile', :login => comment.user.login %>
 			</span>
 		</div>
 		<div class="controls">
-			<a name="comment_<%=c.id%>" href="#comment_<%=c.id%>">link</a>
-		<% if current_user and c.belongs_to?(current_user) %>
-			|
-			<a href="#" class="edit" id="edit_<%= c.id %>">edit</a> 
-			|
-			<%= link_to 'delete',
-						{:controller => 'comments', :action => 'delete', :id => c.id},
-						:id => "delete_#{c.id}",
-						:class => "delete"%>
+			<a name="comment_<%=comment.id%>" href="#comment_<%=comment.id%>">link</a>
+		<% if current_user and comment.user == current_user %>
+                  |
+                  <a href="#" class="edit" id="edit_<%= comment.id %>">edit</a> 
+                  |
+                  <%= link_to 'delete', comment, method: :delete, remote: true %>
 		<% end %>
 		</div>
 		<div class="clear"></div>
 	</div>
 	<div class="clear"></div>
 	<div class="content">
-	<%= RDiscount.new(c.body).to_html.gsub("<pre><code>", "<pre class=\"brush: go\">").
-									 gsub("</code></pre>", "</pre>").
-									 gsub("<pre>", "<pre class=\"brush: go\">")%>
+	<%= RDiscount.new(comment.body).to_html.gsub("<pre><code>", "<pre class=\"brush: go\">").gsub("</code></pre>", "</pre>").gsub("<pre>", "<pre class=\"brush: go\">").html_safe %>
 	</div>
-	<div class="hidden plain_content"><%= c.body %></div>
+	<div class="hidden plain_content"><%= comment.body %></div>
 </div>

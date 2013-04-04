@@ -1,0 +1,32 @@
+<div id="new_comment" class="comment">
+        <div class="author">
+                <img src="<%= grav_url_for(current_user.email, 25) %>" />
+                <span class="author_nickname">
+                        <%= link_to current_user.login, :controller => 'users', :action => 'profile', :login => current_user.login %>
+                </span>
+        </div>
+        <div class="clear"></div>
+        <%= form_for Comment.new, html: {id: "new_comment_form"} do |f| %>
+        Example <span class="instructions">(markdown allowed, code in &lt;pre /&gt;)</span><br />
+        <%= f.text_area :body %>
+        <%= f.hidden_field :commentable_id, value: commentable.id %>
+        <%= f.hidden_field :commentable_type, value: commentable.class %>
+        <div style="text-align: right">
+                <a class="cancel" href="" style="float: left">Cancel</a>
+                <!-- <input class="preview_comment" type="button" value="Preview" /> -->
+        <input type="hidden" name="iscomment" value="true">
+        <%= f.submit 'Add comment'%>
+        </div>
+        <div class="copyright_license">
+                Comments submitted to godocs will be licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CC 0</a>.
+        </div>
+        <% end %>
+        
+        <fieldset class="live_preview">
+                <legend>Live Preview</legend>
+                <div class="preview">
+                </div>
+        </fieldset>
+</div>
+<div class="hidden" id="preview_window">
+</div>

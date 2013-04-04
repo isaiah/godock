@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
-      sign_in(:user, @user, force: true)
+      sign_in(resource, bypass: true)
       redirect_to root_path
     else
       render "new"

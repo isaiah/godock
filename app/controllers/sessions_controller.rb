@@ -5,7 +5,7 @@ class SessionsController < Devise::SessionsController
       redirect_to new_user_path(identity_url: resource.identity_url)
     else
       set_flash_message(:notice, :signed_in) if is_navigational_format?
-      sign_in(resource_name, resource, force: true)
+      sign_in(resource, bypass: true)
       respond_with resource, location: after_sign_in_path_for(resource)
     end
   end

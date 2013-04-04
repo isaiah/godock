@@ -208,10 +208,6 @@ class MainController < ApplicationController
                   else
                     Function.for_namespace(function_url_name, ns, lib_url_name, version)
                   end || not_found
-      
-      @example = Example.new
-      @comment = Comment.new
-
     end
 
     def type_class
@@ -235,12 +231,8 @@ class MainController < ApplicationController
           
       if not @type_class
         logger.error "Couldn't find function id #{params[:id]}"
-
-        render 404
+        not_found
       end
-      
-      @example = Example.new
-      @comment = Comment.new
     end
     
     def function_short_link
