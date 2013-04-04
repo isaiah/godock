@@ -1,4 +1,4 @@
-class UserController < ApplicationController
+class UsersController < ApplicationController
   def profile
     
     @user = User.find_by_login(params[:login])
@@ -17,5 +17,11 @@ class UserController < ApplicationController
     end
         
     @recent = (@user.comments + examples + @user.see_alsos).uniq.sort{|a,b| b.updated_at <=> a.updated_at}
+  end
+
+  def new
+  end
+
+  def create
   end
 end

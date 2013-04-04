@@ -26,7 +26,11 @@ $(document).ready(function() {
 				$.each(data, function(i, v) {
 					var lbl = "<div class=\"ac_search_result\">"
 					lbl += "<span class='name'>" + v.name + "</span>"
-					lbl += "<span class='ns'>" + v.ns + "</span>"
+          if (v.tc == "") {
+            lbl += "<span class='ns'>" + v.ns + "</span>"
+          } else {
+            lbl += "<span class='ns'>" + v.ns + "/<span class='tc'>" + v.tc + "</span></span>"
+          }
 					lbl += "<br />"
 					lbl += "<span class='shortdoc'>" + v.shortdoc + "</span>"
 					lbl += "</div>"

@@ -312,7 +312,7 @@ class MainController < ApplicationController
         #  @functions = @functions[0, 10]
         #end
 
-        render :json => @functions.map{|f| {:href => f.href, :ns => f.ns.name, :name => f.name, :examples => f.examples.size, :shortdoc => f.arglists_comp }}
+        render :json => @functions.map{|f| {:href => f.href, :ns => f.ns.name, :name => f.name, :shortdoc => f.arglists_comp, tc: f.tc }}
       end
       
       def examples_style_guide

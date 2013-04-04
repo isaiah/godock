@@ -62,8 +62,14 @@ class Function < ActiveRecord::Base
     functional.class == Namespace
   end
 
+  # namespace
   def ns
     ns_func? ? functional : functional.namespace
+  end
+
+  # typeclass
+  def tc
+    ns_func? ? "" : functional.name
   end
   
   def href

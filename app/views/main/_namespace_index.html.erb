@@ -12,7 +12,7 @@
   <ul>
     <% namespace_index.namespace.struct_types.each do |tc| %>
       <li>
-        <span><%= tc.name %></span>
+        <span><%= link_to tc.name, tc.href %></span>
         <ul>
           <% tc.functions.each do |f| %>
             <li>

@@ -47,4 +47,7 @@ class TypeClass < ActiveRecord::Base
     namespace.name
   end
 
+  def href
+    "/#{library.name}/#{namespace.name}/t/#{name}"
+  end
 end
