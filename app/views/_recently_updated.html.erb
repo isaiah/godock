@@ -8,29 +8,28 @@ recently_updated.each do |u|
 			
 			<!-- <%= (u.created_at == u.updated_at) ? "commented on" : "updated a comment on" %>  -->
 			on
-			<a href="<%= func.href %>"><span class="ns"><%= func.namespace.name %>/</span><span class="name"><%= func.name %></span></a> 
+			<a href="<%= func.href %>"><span class="ns"><%= func.ns.name %>/</span><span class="name"><%= func.name %></span></a> 
 			<div class="timestamp">
 				by
 				<span class="user">
-					<%= link_to u.user.login, :controller => 'user', :action => 'profile', :login => u.user.login %>
+                                  <%= link_to u.user.login, :controller => 'users', :action => 'profile', :login => u.user.login %>
 				</span>
 			<%= time_ago_or_time_stamp(u.updated_at) %>
 			</div>
 		</div>	
 	
-	<% elsif u.instance_of? Example and u.function_id %>
+	<% elsif u.instance_of? Example and func = u.examplable %>
 
-		<% func = Function.find(u.function_id) %>
 		<div class="recent_example">
 			
 			<!-- <%= (u.created_at == u.updated_at) ? "added an example to" : "updated an example on" %>  -->
 			on
-			<a href="<%= func.href %>"><span class="ns"><%= func.namespace.name %>/</span><span class="name"><%= func.name %></span></a>
+			<a href="<%= func.href %>"><span class="ns"><%= func.ns.name %>/</span><span class="name"><%= func.name %></span></a>
 			<br />
 			<div class="timestamp">
 				by
 				<span class="user">
-					<%= link_to u.user.login, :controller => 'user', :action => 'profile', :login => u.user.login %>
+                                    <%= link_to u.user.login, :controller => 'users', :action => 'profile', :login => u.user.login %>
 				</span>
 			<%= time_ago_or_time_stamp(u.updated_at)%>
 			</div>

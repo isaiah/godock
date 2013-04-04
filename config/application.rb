@@ -16,8 +16,6 @@ module ClojuredocsPg
     config.encoding = 'utf-8'
     config.time_zone = 'UTC'
   
-    config.action_controller.perform_caching = true
-    
     config.filter_parameters += [:password, :password_confirmation]
 
     # Enable the asset pipeline

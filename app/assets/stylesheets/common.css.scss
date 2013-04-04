@@ -92,7 +92,7 @@ ul li {
 }
 
 .ns a:visited {
-	color #999;
+	color: #999;
 }
 
 
@@ -111,15 +111,15 @@ ul li {
 }
 
 .recent_comment {
-	background-image: url('/images/comment.png');
+	background-image: image-url('comment.png');
 }
 
 .recent_example {
-	background-image: url('/images/example.png');
+	background-image: image-url('example.png');
 }
 
 .recent_see_also {
-	background-image: url('/images/file-go.png');
+	background-image: image-url('file-go.png');
 	background-position: -2px -1px;
 }
 

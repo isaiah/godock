@@ -189,10 +189,10 @@ $(document).ready(function() {
           <%= render partial: 'comments/comment', collection: @function.root_comments %>
           <% if current_user %>
                   <h4><a href="" id="add_comment">Add a comment</a>.</h4>
+                  <%= render partial: 'comment_form', locals: {commentable: @function} %>
           <% else %>
                   Log in to add a comment.
           <% end %>
-          <%= render partial: 'comment_form', locals: {commentable: @function} %>
 	</div>
 </div>
 <div class="grid_4 prefix_1">

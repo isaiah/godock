@@ -19,11 +19,9 @@ class CommentsController < ApplicationController
   
   def destroy
     flash[:message] = "There was a problem deleting that comment."
-    if @example = current_user.comments.find(params[:id]) && @example.delete
-      flash[:message] = "Comment successfully deleted."
+    if @example = current_user.comments.find(params[:id])
+      flash[:message] = "Comment successfully deleted." if @example.destroy
     end
-    
-    redirect_back_or_default "/"
+    render js: "$('#comment_#{@example.id}').remove();"
   end
-  
 end
