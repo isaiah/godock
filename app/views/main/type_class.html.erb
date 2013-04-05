@@ -91,7 +91,7 @@ $(document).ready(function() {
 	<div class="usage">
 		<ul>
           <% @type_class.arglists.each do |arglist| %>
-            <li><%= arglist.html_safe %></li>
+ <li><pre><%= arglist.html_safe %></pre></li>
           <% end %>
 		</ul>
 	</div>
@@ -193,7 +193,7 @@ $(document).ready(function() {
 	</div>
 </div>
 <div class="grid_4 prefix_1">
-  <%= render partial: 'namespace_index', object: @type_class %>
+  <%= render partial: 'namespace_index', object: @type_class.namespace %>
 </div>
 </div>
 

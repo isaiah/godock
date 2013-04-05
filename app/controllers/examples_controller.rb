@@ -1,47 +1,38 @@
 class ExamplesController < ApplicationController
+  before_filter :authenticate_user!
   def new
   end
 
   def create
-    var_id = params[:var_id]
-    body = params[:example][:body] rescue nil
-    
-    @function = Function.find_by_id var_id
-    if not @function
-      render json_fail "Couldn't find the var you'd like to add an example to."
-      return
-    end
+    #var_id = params[:var_id]
+    #body = params[:example][:body] rescue nil
+    #
+    #@function = Function.find_by_id var_id
+    #if not @function
+    #  render json_fail "Couldn't find the var you'd like to add an example to."
+    #  return
+    #end
 
-    if not current_user
-      render json_fail "You must be logged in to create an example."
-      return
-    end
-
-    if (not body) or body == ""
+    #if not current_user
+    #  render json_fail "You must be logged in to create an example."
+    #  return
+    #end
+    @example = current_user.examples.new(params[:example])
+    if (not @example.body) or @example.body == ""
       render json_fail "There was a problem saving your example, is it blank?"
-      return
     end
     
-    @example = Example.new
-    @example.body = body
-    @example.user = current_user
-    
-    if not @example.valid?
+    if not @example.save
       render :json => {:success => false, :message => "Invalid example.", :errors => @example.errors}
-      return false
     end
-    
-    @function.examples << @example
-    @function.update_weight
-    @function.save
-    
+   
     render :json => {:success => true, 
                      :message => "Example added.", 
                      :example => {:body => @example.body,
                                   :function_id => @example.examplable_id,
                                   :id => @example.id,
                                   :user_id => @example.user_id},
-                     :content => render_to_string(:partial => "example", :object => @example})}
+                     :content => render_to_string(:partial => "example", :object => @example)}
 
   end
   

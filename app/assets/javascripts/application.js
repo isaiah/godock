@@ -14,9 +14,6 @@
 
 //= require_tree .
 //
-$(function() {
-        //SyntaxHighlighter.all();
-});
 
 $(document).ready(function() {
 	$("#main_search").autocomplete({

@@ -3,6 +3,7 @@
  *= require jquery.autocomplete
  *= require 960
  *= require 960_all
+ *= require shCore
  *= require_tree .
  */
 
@@ -25,5 +26,8 @@ code, pre {
     font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
     font-size: 12px;
     padding: 0 3px 2px;
+}
+.syntaxhighlighter table td.gutter .line {
+    width: 1.7em !important;
 }
 .ui-autocomplete { position: absolute; }

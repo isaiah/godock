@@ -53,6 +53,7 @@ class Function < ActiveRecord::Base
     self.arglists_comp.split '|'
   end
   
+  # TODO should update weight depends on how many views it got
   def update_weight
     self.weight = examples.count
   end
@@ -74,9 +75,9 @@ class Function < ActiveRecord::Base
   
   def href
     if ns_func?
-      "/#{library.url_friendly_name}/#{ns.name}/#{name}"
+      "/#{library.url_friendly_name}/#{ns.name}$#{name}"
     else
-      "/#{library.url_friendly_name}/#{ns.name}/t/#{functional.name}/#{name}"
+      "/#{library.url_friendly_name}/#{ns.name}/#{functional.name}$#{name}"
     end
   end
   

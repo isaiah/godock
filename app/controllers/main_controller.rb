@@ -199,7 +199,7 @@ class MainController < ApplicationController
       lib_url_name = params[:lib]
       version = params[:version]
 
-      ns = params[:ns]
+      ns = params[:ns] || 'builtin'
       type_class = params[:type_class]
       function_url_name = params[:function]
 
@@ -214,7 +214,7 @@ class MainController < ApplicationController
       lib_url_name = params[:lib]
       version = params[:version]
 
-      ns = params[:ns]
+      ns = params[:ns] || 'builtin'
       type_class_name = params[:type_class]
       
       if version
@@ -304,7 +304,7 @@ class MainController < ApplicationController
         #  @functions = @functions[0, 10]
         #end
 
-        render :json => @functions.map{|f| {:href => f.href, :ns => f.ns.name, :name => f.name, :shortdoc => f.arglists_comp, tc: f.tc }}
+        render :json => @functions.map{|f| {:href => f.href, :ns => f.ns.name, :name => f.name, :shortdoc => f.shortdoc, tc: f.tc }}
       end
       
       def examples_style_guide

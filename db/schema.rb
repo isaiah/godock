@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130403090017) do
+ActiveRecord::Schema.define(:version => 20130405180115) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -77,14 +77,14 @@ ActiveRecord::Schema.define(:version => 20130403090017) do
     t.string   "name"
     t.string   "file"
     t.string   "line"
-    t.string   "arglists_comp"
+    t.text     "arglists_comp"
     t.string   "added"
     t.text     "doc"
     t.text     "source"
-    t.integer  "weight",                          :default => 0
+    t.integer  "weight",            :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "shortdoc",          :limit => 70
+    t.string   "shortdoc"
     t.string   "version"
     t.string   "url_friendly_name"
     t.integer  "functional_id"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20130403090017) do
     t.string   "type"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.text     "shortdoc"
   end
 
   create_table "users", :force => true do |t|
