@@ -71,7 +71,7 @@ class MainController < ApplicationController
   def quick_ref_vars_only
     @library = Library.find_by_name(params[:lib])
 
-    if @library and @library.name == "overtone"
+    if @library and @library.name == "gopkg"
       @spheres = CCQuickRef.spheres
       render :action => "clojure_core_vars_only"
     else
@@ -86,7 +86,6 @@ class MainController < ApplicationController
   def search
     q = params[:q] || ""
 
-    # for display on page -- 'You search for x'
     @orig_query = q
 
 
@@ -101,42 +100,22 @@ class MainController < ApplicationController
     qm = res.clone
     qm = qm.fill("?")
     
-    sql = "select * from functions where (name LIKE " + qm.join(" or name LIKE ") + ")
-          AND namespace_id = #{Namespace.find_by_name("overtone.core").id} LIMIT 100"
+    sql = "select * from functions where (name LIKE " + qm.join(" or name LIKE ") + ") LIMIT 24"
 
     begin
-
       @functions = Function.find_by_sql([sql] + res)
-      
-      #@functions = @functions.sort{|a,b| Levenshtein.distance(q, a.name) <=> Levenshtein.distance(q, b.name)}
-      @functions = @functions[0..24]
-
     rescue
       @functions = []
     end
 
     if @functions.size <= 0
-    # 
-    #   #Sphinx specific code
-    #   #if not q.match("@library")
-    #   #  q += " @library (\"Clojure Core\" | \"Clojure Contrib\")"
-    #   #end
-    # 
-    #   q = "*" + q + "*"
-    # 
        @functions = Function.search(q)
-    #   
        @functions = @functions[0..24]
-    # 
     end
-
-    # @functions = @functions.find_all { |f|
-    #   f.library.current
-    # }
 
     if params[:feeling_lucky] and @functions.size > 0
       func = @functions[0]
-      redirect_to "/#{func.library}/#{func.ns}/#{CGI::escape(func.name)}"
+      redirect_to func.href
     end
 
 
