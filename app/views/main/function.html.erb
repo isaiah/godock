@@ -141,9 +141,9 @@ $(document).ready(function() {
 			<% if @function.file %>
 			<span class="file">
 				<% if @library.source_base_url %>
-				<a href="<%= @function.library.source_base_url %>/master<%= @function.namespace.source_url %>#L<%= @function.line %>"><%= @function.file %>:<%= @function.line %></a>
+				<a href="<%= @function.library.source_base_url %>/master<%= @function.ns.source_url %>#L<%= @function.line %>"><%= @function.file %>:<%= @function.line %></a>
 				<% else %>
-				<%= @function.file %>:<%= @function.line %>
+				<%= @function.file %>
 				<% end %>
 			</span>
 			<% end %>
@@ -151,7 +151,7 @@ $(document).ready(function() {
 
 		</h3>
 		<div class="source_content">
-			<pre class="brush: go"><%= @function.source %></pre>
+          <pre class="brush: go; first-line: <%= @function.line %>"><%= @function.source %></pre>
 			<div class="copyright_license">
 				<%= @library.copyright %>
 
@@ -159,7 +159,7 @@ $(document).ready(function() {
 			</div>
 
 			<div class="references">
-				Vars in <span class="ns"><%= @function.namespace.name %>/</span><%= @function.name %>:
+				Vars in <span class="ns"><%= @function.ns.name %>/</span><%= @function.name %>:
 				<% @function.source_references.each do |f|%>
 				<span class="reference"><a href="<%= f.href %>"><%= f.name %></a></span>
 				<% end %>
@@ -184,7 +184,7 @@ $(document).ready(function() {
 	</div>
 	<% end %>
 	
-	<div class="comments">
+	<div class="user_comments">
           <h3><a class="internal_nav scroll" href="#comments" name="comments"><%= pluralize @function.root_comments.size, "Comment" %></a> <a class="top scroll" href="#top">top</a></h3>
           <%= render partial: 'comments/comment', collection: @function.root_comments %>
           <% if current_user %>

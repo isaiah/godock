@@ -199,14 +199,14 @@ class MainController < ApplicationController
       lib_url_name = params[:lib]
       version = params[:version]
 
-      ns = params[:ns] || 'builtin'
+      @current_ns = params[:ns] || 'builtin'
       type_class = params[:type_class]
       function_url_name = params[:function]
 
       @function = if type_class
-                    Function.for_type_class(function_url_name, type_class, ns, lib_url_name, version)
+                    Function.for_type_class(function_url_name, type_class, @current_ns, lib_url_name, version)
                   else
-                    Function.for_namespace(function_url_name, ns, lib_url_name, version)
+                    Function.for_namespace(function_url_name, @current_ns, lib_url_name, version)
                   end || not_found
     end
 
@@ -214,17 +214,17 @@ class MainController < ApplicationController
       lib_url_name = params[:lib]
       version = params[:version]
 
-      ns = params[:ns] || 'builtin'
+      @current_ns = params[:ns] || 'builtin'
       type_class_name = params[:type_class]
       
       if version
         @type_class = TypeClass.includes(:namespace, {:namespace => :library}).where(
-          :namespaces => {:name => ns},
+          :namespaces => {:name => @current_ns},
           :libraries => {:url_friendly_name => lib_url_name, :version => version},
           :name => type_class_name).first
       else
         @type_class = TypeClass.includes(:namespace, {:namespace => :library}).where(
-          :namespaces => {:name => ns},
+          :namespaces => {:name => @current_ns},
           :libraries => { :url_friendly_name => lib_url_name, :current => true},
           :name => type_class_name).first
       end

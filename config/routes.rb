@@ -30,8 +30,8 @@ ClojuredocsPg::Application.routes.draw do
   match '/:lib/:version/builtin/(:type_class)$(:function)' => 'main#function', constraints: { version: /\d+\.[^\/]*/ }
   match '/:lib/:version/builtin/:type_class' => 'main#type_class', constraints: { :version => /\d+\.[^\/]*/}
   match '/:lib/:version/*ns/:type_class' => 'main#type_class', constraints: { :version => /\d+\.[^\/]*/, ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
+  match '/:lib/:version/*ns/(:type_class)$(:function)' => 'main#function', constraints: { version: /\d+\.[^\/]*/, ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
   match '/:lib/:version/(*ns)$(:function)' => 'main#function', :constraints => { :version => /\d+\.[^\/]*/ }
-  match '/:lib/:version/*ns/(:type_class)$(:function)' => 'main#function', constraints: { version: /\d+\.[^\/]*/, type_class: /[A-Z]+\w+/ }
   match '/:lib/:version/*ns' => 'main#ns', :constraints => { :version => /\d+\.[^\/]*/ }
   match '/:lib' => 'main#lib'
   match '/:lib/builtin/(:type_class)$(:function)' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/ }

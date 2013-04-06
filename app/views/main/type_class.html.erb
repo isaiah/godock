@@ -181,7 +181,7 @@ $(document).ready(function() {
 	</div>
 	<% end %>
 	
-	<div class="comments">
+	<div class="user_comments">
           <h3><a class="internal_nav scroll" href="#comments" name="comments"><%= pluralize @type_class.root_comments.size, "Comment" %></a> <a class="top scroll" href="#top">top</a></h3>
           <%= render partial: 'comments/comment', collection: @type_class.root_comments %>
           <% if current_user %>
@@ -191,6 +191,7 @@ $(document).ready(function() {
             Log in to add a comment.
           <% end %>
 	</div>
+    <%= render partial: "function_list", object: @type_class, locals: {lib: @type_class.library} %>
 </div>
 <div class="grid_4 prefix_1">
   <%= render partial: 'namespace_index', object: @type_class.namespace %>
