@@ -121,180 +121,150 @@ class MainController < ApplicationController
 
   end
 
-    def lib_search
-      q = params[:q]
-      lib = params[:lib]
+  def lib_search
+    q = params[:q]
+    lib = params[:lib]
 
-      res = []
-      for i in (0..q.size)
-        after = q[i,q.size]
-        before = q[0,i]
-        res << before + ".*" + after
-      end
-
-      qm = res.clone
-      qm = qm.fill("?")
-
-      sql = ""
-      out = []
-      if lib
-        sql = "select name, ns from functions where library = ? and (name RLIKE " + qm.join(" or name RLIKE ")  + ")"   
-        #      raise sql
-        out = Function.find_by_sql([sql, params[:lib]] + res)
-      else
-        sql = "select name, ns from functions where name RLIKE " + qm.join(" or name RLIKE ")    
-        out = Function.find_by_sql([sql] + res)
-      end
-
-      #@functions = out.sort{|a,b| Levenshtein.distance(q, a.name) <=> Levenshtein.distance(q, b.name)}
-      @functions = out
-      render :json => @functions.map{|f| {:name => f[:name], :ns => f[:ns]}}.to_json
+    res = []
+    for i in (0..q.size)
+      after = q[i,q.size]
+      before = q[0,i]
+      res << before + ".*" + after
     end
 
-    def ns
-      
-      lib_name = params[:lib]
-      version = params[:version]
-      ns_name = params[:ns]
-      
-      @library = nil
-      if version
-        @library = Library.find_by_url_friendly_name_and_version(lib_name, version)
-      else
-        @library = Library.find_by_url_friendly_name_and_current(lib_name, true)
-      end
-      
-      @ns = nil
-      if @library
-        @ns = Namespace.find_by_name_and_library_id(ns_name, @library.id)
-      end
-      
-      if not @ns or not @library
-        render :template => 'public/404.html', :layout => false, :status => 404
-      end
+    qm = res.clone
+    qm = qm.fill("?")
+
+    sql = ""
+    out = []
+    if lib
+      sql = "select name, ns from functions where library = ? and (name RLIKE " + qm.join(" or name RLIKE ")  + ")"   
+      #      raise sql
+      out = Function.find_by_sql([sql, params[:lib]] + res)
+    else
+      sql = "select name, ns from functions where name RLIKE " + qm.join(" or name RLIKE ")    
+      out = Function.find_by_sql([sql] + res)
+    end
+
+    #@functions = out.sort{|a,b| Levenshtein.distance(q, a.name) <=> Levenshtein.distance(q, b.name)}
+    @functions = out
+    render :json => @functions.map{|f| {:name => f[:name], :ns => f[:ns]}}.to_json
+  end
+
+  def ns
+    
+    lib_name = params[:lib]
+    version = params[:version]
+    ns_name = params[:ns]
+    
+    @library = nil
+    if version
+      @library = Library.find_by_url_friendly_name_and_version(lib_name, version)
+    else
+      @library = Library.find_by_url_friendly_name_and_current(lib_name, true)
     end
     
-    def function
-      lib_url_name = params[:lib]
-      version = params[:version]
-
-      @current_ns = params[:ns] || 'builtin'
-      type_class = params[:type_class]
-      function_url_name = params[:function]
-
-      @function = if type_class
-                    Function.for_type_class(function_url_name, type_class, @current_ns, lib_url_name, version)
-                  else
-                    Function.for_namespace(function_url_name, @current_ns, lib_url_name, version)
-                  end || not_found
-    end
-
-    def type_class
-      lib_url_name = params[:lib]
-      version = params[:version]
-
-      @current_ns = params[:ns] || 'builtin'
-      type_class_name = params[:type_class]
-      
-      if version
-        @type_class = TypeClass.includes(:namespace, {:namespace => :library}).where(
-          :namespaces => {:name => @current_ns},
-          :libraries => {:url_friendly_name => lib_url_name, :version => version},
-          :name => type_class_name).first
-      else
-        @type_class = TypeClass.includes(:namespace, {:namespace => :library}).where(
-          :namespaces => {:name => @current_ns},
-          :libraries => { :url_friendly_name => lib_url_name, :current => true},
-          :name => type_class_name).first
-      end
-          
-      if not @type_class
-        logger.error "Couldn't find function id #{params[:id]}"
-        not_found
-      end
+    @ns = nil
+    if @library
+      @ns = Namespace.find_by_name_and_library_id(ns_name, @library.id)
     end
     
-    def function_short_link
-      @function = Function.find(params[:id]) rescue nil
-      
-      if not @function
-        logger.error "Couldn't find function id #{params[:id]}"
-
-        render :template => 'public/404.html', :layout => false, :status => 404
-      end
-      
-      version = (params[:version] || @function.version)
-      
-      if not @function
-        logger.error "Couldn't find function id #{params[:id]}"
-
-        render :template => 'public/404.html', :layout => false, :status => 404
-      end
-      
-      redirect_to :controller => 'main',
-			            :action => 'function',
-			            :lib => @function.namespace.library.url_friendly_name,
-			            :version => (@function.namespace.library.current ? nil : @function.namespace.library.version),
-			            :ns => @function.namespace.name,
-			            :function => @function.url_friendly_name
-			            
+    if not @ns or not @library
+      render :template => 'public/404.html', :layout => false, :status => 404
     end
+  end
+  
+  def function
+    lib_url_name = params[:lib]
+    version = params[:version]
 
-    def search_autocomplete
-      
-      q = params[:term]
-      q = q.gsub("-", "")
-      if not q
-        #render :json => []
-        q = ""
-      end
+    @current_ns = params[:ns] || 'builtin'
+    type_class = params[:type_class]
+    function_url_name = params[:function]
 
-      q = '"' + q + '*"'
-      
-      core_current_version = (Library.find_by_name_and_current("gopkg", true).version rescue nil || "1.0.3")
-      contrib_current_version = (Library.find_by_name_and_current("Clojure Contrib", true).version rescue nil || "1.0.3")
-      
-      # @version (\"#{core_current_version}\" | \"#{contrib_current_version}\")
+    @function = if type_class
+                  Function.for_type_class(function_url_name, type_class, @current_ns, lib_url_name, version)
+                else
+                  Function.for_namespace(function_url_name, @current_ns, lib_url_name, version)
+                end || not_found
+  end
 
-      @functions = Function.quick_search(q)
+  def type_class
+    lib_url_name = params[:lib]
+    version = params[:version]
 
-        @functions.delete(nil)
-
-        if @functions != nil and @functions.size > 0
-          
-          #@functions.sort!{|a,b| 
-          #  Levenshtein.distance(q, a.name) <=> Levenshtein.distance(q, b.name) 
-          #}
-
-           
-        end
-        
-        @exact_matches = Function.find_all_by_name(params[:term])
-        
-        if @exact_matches
-          @functions = (@exact_matches + @functions).uniq
-        end
-
-        @functions = @functions.find_all { |f|
-          f.library.current
-        }
-
-        #if @functions.size > 10
-        #  @functions = @functions[0, 10]
-        #end
-
-        render :json => @functions.map{|f| {:href => f.href, :ns => f.ns.name, :name => f.name, :shortdoc => f.shortdoc, tc: f.tc }}
-      end
-      
-      def examples_style_guide
-        
-      end
-
+    @current_ns = params[:ns] || 'builtin'
+    type_class_name = params[:type_class]
+    
+    if version
+      @type_class = TypeClass.includes(:namespace, {:namespace => :library}).where(
+        :namespaces => {:name => @current_ns},
+        :libraries => {:url_friendly_name => lib_url_name, :version => version},
+        :name => type_class_name).first
+    else
+      @type_class = TypeClass.includes(:namespace, {:namespace => :library}).where(
+        :namespaces => {:name => @current_ns},
+        :libraries => { :url_friendly_name => lib_url_name, :current => true},
+        :name => type_class_name).first
     end
+        
+    if not @type_class
+      logger.error "Couldn't find function id #{params[:id]}"
+      not_found
+    end
+  end
+  
+  def function_short_link
+    @function = Function.find(params[:id]) rescue nil
+    
+    if not @function
+      logger.error "Couldn't find function id #{params[:id]}"
 
+      render :template => 'public/404.html', :layout => false, :status => 404
+    end
+    
+    version = (params[:version] || @function.version)
+    
+    if not @function
+      logger.error "Couldn't find function id #{params[:id]}"
 
+      render :template => 'public/404.html', :layout => false, :status => 404
+    end
+    
+    redirect_to :controller => 'main',
+                                  :action => 'function',
+                                  :lib => @function.namespace.library.url_friendly_name,
+                                  :version => (@function.namespace.library.current ? nil : @function.namespace.library.version),
+                                  :ns => @function.namespace.name,
+                                  :function => @function.url_friendly_name
+                                  
+  end
 
+  def search_autocomplete
+    q = params[:term]
+    q = q.gsub("-", "")
+    if not q
+      render :json => []
+      #q = ""
+    end
+    q = '"' + q + '*"'
+    core_version = params[:version] || Library.find_by_name_and_current("gopkg", true).version
+    functions = Function.quick_search(q).where(version: core_version)
+    type_classes = TypeClass.quick_search(q).where(version: core_version)
+    results = (functions + type_classes).sort_by(&:name).map do |f|
+      a = {:href => f.href, :ns => f.ns_name, :name => f.name, type: f.class.to_s.downcase}
+      if f.is_a?(TypeClass)
+        a.merge!(shortdoc: f.doc.truncate(100))
+      else
+        a.merge!(shortdoc: f.shortdoc)
+      end
+      (f.is_a?(Function) && ! f.ns_func?) ? a.merge(tc: f.tc) : a
+    end
+    render json: results
+  end
+  
+  def examples_style_guide
+    
+  end
 
-
-
-
+end

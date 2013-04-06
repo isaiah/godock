@@ -2,8 +2,8 @@ ClojuredocsPg::Application.routes.draw do
   devise_for :users, :path => "", :path_names => { :sign_in => 'login', :sign_out => 'logout' }, :controllers => { :sessions => "sessions" }
 
   resources :users
+  resources :remarks
 
-  match '/examples_style_guide' => 'main#examples_style_guide'
   match '/profile/:login' => 'users#profile'
   match '/search_autocomplete' => 'main#search_autocomplete'
   match '/search' => 'main#search'

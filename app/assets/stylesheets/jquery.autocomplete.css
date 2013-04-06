@@ -1,6 +1,7 @@
 .ui-autocomplete {
-	padding: 0px;
-	border: 1px solid black;
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
 	background-color: white;
 	overflow: hidden;
 	z-index: 99999;
@@ -16,7 +17,6 @@
 
 .ui-autocomplete li {
 	margin: 0px;
-	padding: 2px 5px;
 	cursor: default;
 	display: block;
 	/* 
@@ -45,11 +45,4 @@
 .ac_over {
 	background-color: #0A246A;
 	color: white;
-}
-
-.ui-state-focus {
-  background-color: #EEEEAA;
-}
-.tc {
-  color: #0A246A;
 }

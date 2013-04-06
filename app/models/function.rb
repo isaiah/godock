@@ -154,4 +154,8 @@ class Function < ActiveRecord::Base
                  end
     functions.first
   end
+
+  def ns_name
+    ns.name
+  end
 end

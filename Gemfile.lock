@@ -62,7 +62,10 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    feedbacker (0.1.5)
     flexmock (0.8.7)
+    font-awesome-rails (3.0.2.0)
+      railties (>= 3.1)
     haml (4.0.0)
       tilt
     highline (1.6.15)
@@ -178,7 +181,9 @@ DEPENDENCIES
   dalli (~> 1.0.5)
   devise
   devise_openid_authenticatable
+  feedbacker
   flexmock (= 0.8.7)
+  font-awesome-rails
   haml
   jquery-rails
   jquery-ui-rails

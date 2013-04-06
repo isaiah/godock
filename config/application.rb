@@ -18,6 +18,8 @@ module ClojuredocsPg
   
     config.filter_parameters += [:password, :password_confirmation]
 
+    config.paths['db/migrate'] += Feedbacker::Engine.paths['db/migrate'].existent
+
     # Enable the asset pipeline
     config.assets.enabled = true
 

@@ -9,6 +9,7 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
   gem 'zurb-foundation', '~> 4.0.0'
+  gem 'font-awesome-rails'
 end
 
 gem 'jquery-rails'
@@ -47,3 +48,4 @@ end
 gem 'psych'
 gem 'devise'
 gem "devise_openid_authenticatable"
+gem 'feedbacker'

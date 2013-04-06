@@ -22,11 +22,17 @@ $(document).ready(function() {
 				var out = []
 				$.each(data, function(i, v) {
 					var lbl = "<div class=\"ac_search_result\">"
-					lbl += "<span class='name'>" + v.name + "</span>"
-          if (v.tc == "") {
-            lbl += "<span class='ns'>" + v.ns + "</span>"
+					lbl += "<span class='name'><i class='";
+          if (v.type == "function") {
+            lbl += "icon-cog";
           } else {
+            lbl += "icon-cogs";
+          }
+          lbl += "'/>" + v.name + "</span>"
+          if (v.tc) {
             lbl += "<span class='ns'>" + v.ns + "/<span class='tc'>" + v.tc + "</span></span>"
+          } else {
+            lbl += "<span class='ns'>" + v.ns + "</span>"
           }
 					lbl += "<br />"
 					lbl += "<span class='shortdoc'>" + v.shortdoc + "</span>"
@@ -44,11 +50,10 @@ $(document).ready(function() {
 			return false
 		},
     position: {
-          my: "right: top", at: "right bottom"
+          my: "right top", at: "right bottom+13"
     },
     minLength: 2,
     html: true,
 		dataType: "json"
 	});
 });
-

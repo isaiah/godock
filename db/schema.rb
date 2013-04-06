@@ -162,6 +162,14 @@ ActiveRecord::Schema.define(:version => 20130405180115) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "remarks", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "source_url"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "see_alsos", :force => true do |t|
     t.integer  "from_id"
     t.integer  "to_id"

@@ -4,8 +4,11 @@
  *= require 960
  *= require 960_all
  *= require shCore
+ *= require feedbacker
  *= require_tree .
  */
+
+@import "font-awesome";
 
 pre {
     background-color: #F5F5F5;
@@ -30,4 +33,7 @@ code, pre {
 .syntaxhighlighter table td.gutter .line {
     width: 1.7em !important;
 }
-.ui-autocomplete { position: absolute; }
+
+#feedback {
+  top: 200px;
+}

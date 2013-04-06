@@ -1,4 +1,6 @@
 class TypeClass < ActiveRecord::Base
+  include PgSearch
+
   attr_accessible :arglists_comp, :doc, :name, :namespace_id, :version
   has_many :functions, :dependent => :delete_all, as: :functional
   has_many :examples, as: :examplable
@@ -6,6 +8,9 @@ class TypeClass < ActiveRecord::Base
 
   belongs_to :namespace
   acts_as_commentable
+
+  pg_search_scope :quick_search, against: [:name], using: { tsearch: {prefix: true} }
+ 
 
   def self.versions_of(type_class)
     self.includes(:namespace, {:namespace => :library}).where(
