@@ -26,6 +26,7 @@ gem 'chronic', '0.2.3'
 gem 'will_paginate'
 #gem 'levenshtein', '0.2.0'
 gem 'haml'
+gem 'unicorn'
 
 group :development do
   gem 'pry'
