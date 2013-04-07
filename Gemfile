@@ -18,7 +18,7 @@ gem 'ruby-openid'
 gem 'rack-openid', :require => nil
 gem "pg"
 gem "pg_search"
-gem 'dalli', '~> 1.0.5'
+#gem 'dalli', '~> 1.0.5'
 gem 'acts_as_commentable_with_threading'
 
 gem 'rdiscount', '1.6.5'

@@ -50,7 +50,6 @@ GEM
     chronic (0.2.3)
       hoe (>= 1.2.1)
     coderay (1.0.8)
-    dalli (1.0.5)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -183,7 +182,6 @@ DEPENDENCIES
   better_errors
   capistrano
   chronic (= 0.2.3)
-  dalli (~> 1.0.5)
   devise
   devise_openid_authenticatable
   feedbacker

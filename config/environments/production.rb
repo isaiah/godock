@@ -16,8 +16,8 @@ ClojuredocsPg::Application.configure do
   # config.logger = SyslogLogger.new
 
   # Use a different cache store in production
-  require 'active_support/cache/dalli_store23'
-  config.cache_store = :dalli_store
+  #require 'active_support/cache/dalli_store23'
+  #config.cache_store = :dalli_store
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
