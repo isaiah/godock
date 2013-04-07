@@ -8,3 +8,6 @@ coverage.data
 test/coverage
 .bundle
 tags
+.rbenv-version
+Capfile
+config/deploy.rb
