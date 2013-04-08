@@ -6,11 +6,11 @@
 		</div>
 	</div>
 	<div class="grid_16">
-          <div class="grid_12 prefix_4">
+          <div class="grid_15 prefix_3">
             <%= form_tag '/search', :method => "GET" do %>
               <div class="home_search">
                 <div class="search_container">
-                  <input id="main_search" class="text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> />
+                  <input id="main_search" class="homepage text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> placeholder="Search"/>
                   <% if params[:lib] %>
                           <input type="hidden" name="lib" value="<%= params[:lib] %>" />
                   <% end %>
@@ -50,8 +50,12 @@
                           <ul>
                             <li class="add_example">
                               <h3>Add an Example</h3>
+                              <p>Share your knowledge with fellow gophers by adding an example for your favorite var.</p>
+
+                              <!--
                               <p>Sharing your knowledge with fellow gophers is easy:</p>
                               <p>First, take a look at the <a href="/examples_style_guide">examples style guide</a>, and then add an example for your favorite var (or pick one from <a href="/management/gopkg">the list</a>).</p>
+                              -->
                               <p>In addition to examples, you also have the ability to add &apos;see also&apos; references between vars.</p>
                             </li>
                             <li class="feed_back">
@@ -74,13 +78,17 @@
                     </ul>
 
                     <div class="clear"></div>
+                    <!--
                     <span class="find_functions_without_examples"><a href="/management/clojure_core">Find vars that need examples.</a></span>
+                    -->
                   </div>
+                  <!--
                   <%= image_tag "curly_bracket.png", :class => "curly", :width => 355, :height => 102 %>
                   <div class="recently_updated_panel">
                     <h2>Recently Updated <a href="/feed/recent_updates" alt="All recent updates RSS feed"><%= image_tag 'browser-rss.png', :width => 20, :height => 20 %></a></h2>
                     <%= render :partial => '/recently_updated', :locals => {:recently_updated => @recently_updated}%>
                   </div>
+                  -->
 		</div>
 
 		<div class="clear"></div>

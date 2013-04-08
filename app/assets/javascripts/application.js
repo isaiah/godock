@@ -16,6 +16,12 @@
 //
 
 $(document).ready(function() {
+  var pos = [];
+  if ($("#main_search").hasClass("homepage")) {
+          pos = ["left-1 top", "left bottom+11"]
+  } else {
+          pos = ["right top", "right bottom+13"]
+  }
 	$("#main_search").autocomplete({
 		source: function(req, add) {
 			$.getJSON("/search_autocomplete", req, function(data) {
@@ -50,10 +56,10 @@ $(document).ready(function() {
 			return false
 		},
     position: {
-          my: "right top", at: "right bottom+13"
+          my: pos[0], at: pos[1]
     },
     minLength: 2,
     html: true,
 		dataType: "json"
-	});
+	}).on('focus', function(){ $(this).autocomplete("search"); });
 });
