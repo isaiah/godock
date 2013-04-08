@@ -6,16 +6,19 @@
 		</div>
 	</div>
 	<div class="grid_16">
-		<div class="grid_7 prefix_1 alpha">
-			<div class="core_libraries">
-				<div class="library">
-					<h3><a href="/gopkg">Go Packages</a></h3>
-					<a href="https://code.google.com/p/go/">https://code.google.com/p/go/</a>
-					<p>Go package is a collection of standard libraries implementing features that we believe may be useful to a large part of the golang community.</p>
-				</div>
-			</div>
-		</div>
-		<div class="clear"></div>
+          <div class="grid_12 prefix_4">
+            <%= form_tag '/search', :method => "GET" do %>
+              <div class="home_search">
+                <div class="search_container">
+                  <input id="main_search" class="text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> />
+                  <% if params[:lib] %>
+                          <input type="hidden" name="lib" value="<%= params[:lib] %>" />
+                  <% end %>
+                  <%= image_tag "search.png", type: "submit", class: "submit" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
 	</div>
 	<div class="clear"></div>
 	<br />
@@ -27,7 +30,7 @@
 
 		<br />
 		<br />
-		<div class="grid_9 prefix_1 suffix_1">
+		<div class="grid_8 prefix_1 suffix_1">
 			<div class="welcome_message">
 				<h2>Getting started with Godock</h2>
 				<p>Finding the right tool for the job can be tough, so we&apos;ve outlined a few ways to go about your search below.</p>
@@ -40,10 +43,44 @@
 
 			<div class="beta_status">
 			</div>
+                        
+                        <div class="contribute">
+                          <h2>Contribute to Godock</h2>
+                          <p>We need your help to make Godock a great community resource.  Here are a couple of ways you can contribute.</p>
+                          <ul>
+                            <li class="add_example">
+                              <h3>Add an Example</h3>
+                              <p>Sharing your knowledge with fellow gophers is easy:</p>
+                              <p>First, take a look at the <a href="/examples_style_guide">examples style guide</a>, and then add an example for your favorite var (or pick one from <a href="/management/gopkg">the list</a>).</p>
+                              <p>In addition to examples, you also have the ability to add &apos;see also&apos; references between vars.</p>
+                            </li>
+                            <li class="feed_back">
+                              <h3>Give Feedback</h3>
+                              <p>Click on the feedback button on the left side to tell us what you think about our site.</p>
+                            </li>
+                          </ul>
+                        </div>
 		</div>
 
-		<div class="grid_8">
+		<div class="grid_6">
+                  <div class="top_contributors">
+                    <h2>Top Contributors</h2>
+                    <ul class="top_contributors">
+                      <% @top_contributors.each do |tc| %>
+                        <li>
+                          <%= link_to image_tag(grav_url_for(tc[:email]), :alt => tc[:author]), :controller => 'users', :action => 'profile', :login => tc[:author] %>
+                        </li>
+                      <% end %>
+                    </ul>
 
+                    <div class="clear"></div>
+                    <span class="find_functions_without_examples"><a href="/management/clojure_core">Find vars that need examples.</a></span>
+                  </div>
+                  <%= image_tag "curly_bracket.png", :class => "curly", :width => 355, :height => 102 %>
+                  <div class="recently_updated_panel">
+                    <h2>Recently Updated <a href="/feed/recent_updates" alt="All recent updates RSS feed"><%= image_tag 'browser-rss.png', :width => 20, :height => 20 %></a></h2>
+                    <%= render :partial => '/recently_updated', :locals => {:recently_updated => @recently_updated}%>
+                  </div>
 		</div>
 
 		<div class="clear"></div>

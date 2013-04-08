@@ -1,0 +1,9 @@
+<div class="search">
+        <%= form_tag '/search', :method => "GET" do %>
+                <%= image_submit_tag 'magnifying_glass_alt_24x24.png', :class => 'submit_image', :height => '20px', :width => '20px' %>
+                <input id="main_search" class="text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> />
+                <% if params[:lib] %>
+                        <input type="hidden" name="lib" value="<%= params[:lib] %>" />
+                <% end %>
+        <% end %>
+</div>

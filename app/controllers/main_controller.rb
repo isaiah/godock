@@ -1,40 +1,33 @@
 class MainController < ApplicationController
 
   layout 'application', :except => ["lib_search", "preview_example"]
-  #caches_page :index
-  #caches_page :lib
-  #caches_page :quick_ref_shortdesc
-  #caches_page :quick_ref_vars_only
-  #caches_page :libs
-  #caches_page :function
-  #caches_page :function_short_link
-
 
   def index
-    # num_recent = 6
-    # num_tc = 24
-    # @recently_updated = find_recently_updated(7, nil)
-    # @top_contributors = []
+    num_recent = 6
+    num_tc = 24
+    @recently_updated = find_recently_updated(7, nil)
+    @top_contributors = []
 
-    # tc_example_versions = Example.find_by_sql("select count(*), example_versions.user_id from example_versions group by user_id order by count(*) desc")[0, num_tc+1]
-    # tc_examples = Example.find_by_sql("select count(*), examples.user_id from examples group by user_id order by count(*) desc;")[0, num_tc+1]
+    #tc_example_versions = Example.find_by_sql("select count(*), examples.user_id from examples group by user_id order by count(*) desc")[0, num_tc+1]
+    tc_examples = Example.find_by_sql("select count(*), examples.user_id from examples group by user_id order by count(*) desc limit #{num_tc}")
 
-    # tc_examples.each do |e|
-    #   count = e["count(*)"]
-    #   tc_example_versions.each do |v|
-    #     if(e.user_id == v.user_id)
-    #       count += v["count(*)"]
-    #     end
-    #   end
+    tc_examples.each do |e|
+      count = e["count(*)"]
+      #tc_example_versions.each do |v|
+      #  if(e.user_id == v.user_id)
+      #    count += v["count(*)"]
+      #  end
+      #end
 
-    #   user = User.find(e.user_id)
-    #   if not user.id == 1
-    #     @top_contributors << {:author => user.login, :email => user.email, :score => count} 
-    #   end
-    # end
+      if e.user_id
+        user = User.find(e.user_id)
+        #if not user.id == 1
+          @top_contributors << {:author => user.login, :email => user.email, :score => count} 
+        #end
+      end
+    end
     
-    # @top_contributors = @top_contributors[0, num_tc]
-
+    @top_contributors = @top_contributors[0, num_tc]
   end
 
   def lib

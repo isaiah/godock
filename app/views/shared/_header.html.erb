@@ -28,15 +28,7 @@
 			<h1><a href="/">Godock</a><span class="version">(beta)</span></h1>
 		</div>
 		<div class="grid_12">
-			<div class="search">
-				<%= form_tag '/search', :method => "GET" do %>
-					<%= image_submit_tag 'magnifying_glass_alt_24x24.png', :class => 'submit_image', :height => '20px', :width => '20px' %>
-					<input id="main_search" class="text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> />
-					<% if params[:lib] %>
-						<input type="hidden" name="lib" value="<%= params[:lib] %>" />
-					<% end %>
-				<% end %>
-			</div>
+                  <%= render 'shared/search' unless controller_name == "main" && controller.action_name == "index" %>
 		</div>
 		<div class="clear"></div>
 	</div>
