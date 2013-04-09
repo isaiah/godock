@@ -1,6 +1,9 @@
 class MainController < ApplicationController
 
   layout 'application', :except => ["lib_search", "preview_example"]
+  before_filter do
+    expires_in 5.minutes, :public => true unless user_signed_in?
+  end
 
   def index
     num_recent = 6

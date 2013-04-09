@@ -26,10 +26,6 @@ module ClojuredocsPg
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.assets.initialize_on_precompile = false
-    config.middleware.use Rack::Cache,
-      :verbose => true,
-      :metastore   => "memcached://127.0.0.1:11211/meta",
-      :entitystore => "memcached://127.0.0.1:11211/body"
   end
 end
 ROOT_URL = ""
