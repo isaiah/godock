@@ -10,7 +10,7 @@
             <%= form_tag '/search', :method => "GET" do %>
               <div class="home_search">
                 <div class="search_container">
-                  <input id="main_search" class="homepage text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> placeholder="Search"/>
+                  <input id="main_search" class="homepage text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> placeholder="Search for gopkg functions and types"/>
                   <% if params[:lib] %>
                           <input type="hidden" name="lib" value="<%= params[:lib] %>" />
                   <% end %>
@@ -82,13 +82,11 @@
                     <span class="find_functions_without_examples"><a href="/management/clojure_core">Find vars that need examples.</a></span>
                     -->
                   </div>
-                  <!--
                   <%= image_tag "curly_bracket.png", :class => "curly", :width => 355, :height => 102 %>
                   <div class="recently_updated_panel">
-                    <h2>Recently Updated <a href="/feed/recent_updates" alt="All recent updates RSS feed"><%= image_tag 'browser-rss.png', :width => 20, :height => 20 %></a></h2>
-                    <%= render :partial => '/recently_updated', :locals => {:recently_updated => @recently_updated}%>
+                    <h2>Recently Updated <a href="/feed/recent_updates"><%= image_tag 'browser-rss.png', width: 20, height: 20, alt: "All recent updates RSS feed" %></a></h2>
+                    <%= render partial: 'shared/recently_updated', object: @recently_updated %>
                   </div>
-                  -->
 		</div>
 
 		<div class="clear"></div>

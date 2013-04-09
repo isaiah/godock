@@ -1,4 +1,3 @@
-
 <% content_for :title, " - #{@function.functional.name}/#{@function.name}" %>
 
 <script type="text/javascript" charset="utf-8">
@@ -102,7 +101,7 @@ $(document).ready(function() {
 	<% if @function.doc %>
 	<div class="doc">
 		<a class="internal_nav scroll" href="#doc" name="doc"></a>
-		<div class="content"><%= @function.doc.gsub("\n", "<br />").gsub(/http:\/\/[a-zA-Z0-9-.\/?%&=:@;_#]*/){|s| '<a href="' + s + '">' + s + '</a>' }.html_safe if @function.doc %></div>
+		<div class="content"><%= @function.doc.gsub("\n", "<br />").gsub(/http:\/\/[a-zA-Z0-9.\/?%&=:@;_#]*/){|s| '<a href="' + s + '">' + s + '</a>' }.html_safe if @function.doc %></div>
 		<div class="copyright_license">
 			<%= @library.copyright %>
 			
@@ -111,7 +110,7 @@ $(document).ready(function() {
 	</div>
 	<% end %>
 	
-        <%= render partial: 'examples', locals: {examplable: @function } %>
+        <%= render partial: 'examples', locals: { examplable: @function } %>
 	
 	<div class="see_alsos">
           <h3>See Also <a class="top scroll" href="#top">top</a></h3>
@@ -119,7 +118,7 @@ $(document).ready(function() {
           <ul>
             <% @function.all_versions_see_alsos.each do |sa| %>
               <li class="see_also_item" id="see_also_item_<%=sa.id%>">
-                <%= render :partial => "/see_also/see_also_content", :locals => {:sa => sa} %>
+                <%= render :partial => "see_also/see_also_content", :locals => {:sa => sa} %>
               </li>
             <% end %>
           </ul>
@@ -158,30 +157,6 @@ $(document).ready(function() {
 				<%= (@library.license || "See <a href='#{@library.site_url}'>#{@library.site_url}</a> for copyright and license details.").html_safe %>
 			</div>
 
-                        <!--
-			<div class="references">
-				Vars in <span class="ns"><%= @function.ns.name %>/</span><%= @function.name %>:
-				<% @function.source_references.each do |f|%>
-				<span class="reference"><a href="<%= f.href %>"><%= f.name %></a></span>
-				<% end %>
-			</div>
-
-			<div class="used_in">
-				Used in <%= @function.used_in.size %> other vars
-				<% if @function.used_in.size < 20 %>
-				<% @function.used_in.each do |f| %>
-				<span class="reference"><a href="<%= f.href %>"><%= f.name %></a></span>
-				<% end %>
-				<% else %>
-				<a href="#" class="expand_used_in">(expand)</a>
-				<div class="used_in_expander">
-					<% @function.used_in.each do |f| %>
-					<span class="reference"><a href="<%= f.href %>"><%= f.name %></a></span>
-					<% end %>
-				</div>
-				<% end %>
-			</div>
-                        -->
 		</div>
 	</div>
 	<% end %>

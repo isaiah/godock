@@ -103,17 +103,11 @@ class ExamplesController < ApplicationController
     render :json => {:success => true, :message => "Example deleted."}
   end
 
-  def view_changes
-
-    id = params[:id] || 0
-
-    @example = Example.find_by_id(id)
+  def show
+    @example = Example.find(params[:id])
     if not @example
       flash[:message] = "Couldn't find the example you're looking for."
       redirect_back_or_default "/"
-      return
     end
-
-    @versions = @example.versions.reverse
   end
 end

@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/jwhitehorn/acts_as_versioned.git
+  revision: c0a70fb2bb8f3fef65852f79d636da8dfdca9f24
+  specs:
+    acts_as_versioned (3.2.0)
+      activerecord (>= 3.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -180,6 +187,7 @@ PLATFORMS
 DEPENDENCIES
   ZenTest (= 4.4.0)
   acts_as_commentable_with_threading
+  acts_as_versioned!
   better_errors
   capistrano
   chronic (= 0.2.3)
