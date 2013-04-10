@@ -4,13 +4,12 @@ ClojuredocsPg::Application.routes.draw do
   resources :users
   resources :remarks
 
-  match '/profile/:login' => 'users#profile'
+  match '/profile/:login' => 'users#profile', as: "user_profile"
   match '/search_autocomplete' => 'main#search_autocomplete'
   match '/search' => 'main#search'
   match '/search/:lib' => 'main#search'
   match '/ac_search' => 'main#lib_search'
   match '/ac_search/:lib' => 'main#lib_search'
-  match '/examples/view_changes/:id' => 'examples#view_changes'
   resources :examples
   resources :comments
   match '/quickref/:lib' => 'main#quick_ref_shortdesc'

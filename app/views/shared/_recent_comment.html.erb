@@ -1,0 +1,12 @@
+<div class="recent_comment">
+  <!-- <%= (u.created_at == u.updated_at) ? "commented on" : "updated a comment on" %>  -->
+  on
+  <a href="<%= func.href %>"><span class="ns"><%= func.ns.name %>/</span><span class="name"><%= func.name %></span></a> 
+  <div class="timestamp">
+    by
+    <span class="user">
+      <%= link_to u.user.login, :controller => 'users', :action => 'profile', :login => u.user.login %>
+    </span>
+    <%= time_ago_or_time_stamp(u.updated_at) %>
+  </div>
+</div>	

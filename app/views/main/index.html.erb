@@ -1,8 +1,11 @@
 <% content_for :title, " - Community-Powered Golang Documentation and Examples" %>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
 <div class="container_16">
 	<div class="grid_15 prefix_1 suffix_1">
 		<div class="overview">
-			<h3 style="text-align: left">Godock is a community-powered documentation and examples repository for the <a href="http://golang.org">Go programming language</a>.</h3>
+                  <h3 style="text-align: left">
+                    Godock is a community-powered documentation and examples repository for the <a href="http://golang.org">Go programming language</a>.</h3>
 		</div>
 	</div>
 	<div class="grid_16">
@@ -10,7 +13,7 @@
             <%= form_tag '/search', :method => "GET" do %>
               <div class="home_search">
                 <div class="search_container">
-                  <input id="main_search" class="homepage text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> placeholder="Search"/>
+                  <input id="main_search" class="homepage text_field" name="q" type="text" <%= (params[:q] ? "value=\"#{params[:q]}\"" : "")%> placeholder="Search for gopkg functions and types"/>
                   <% if params[:lib] %>
                           <input type="hidden" name="lib" value="<%= params[:lib] %>" />
                   <% end %>
@@ -32,7 +35,10 @@
 		<br />
 		<div class="grid_8 prefix_1 suffix_1">
 			<div class="welcome_message">
-				<h2>Getting started with Godock</h2>
+                          <h2>
+                            Getting started with Godock
+                            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://godock.org" data-text="Godock makes gopkg document looking up so smooth, also comes with examples." data-via="isaiah_peng" data-hashtags="golang">Tweet</a>
+                          </h2>
 				<p>Finding the right tool for the job can be tough, so we&apos;ve outlined a few ways to go about your search below.</p>
 				<ul>
 					<li class="wm_quickref">Take a look at <a href="http://tour.golang.org/#1">A Tour of Go</a>, which is an interactive introduction to Go. Alternatively, browser the <a href="http://gobyexamples.com">Go by Examples</a> for usage of different features of Golang using annotated example programs.</li>
@@ -41,9 +47,6 @@
 				</ul>
 			</div>
 
-			<div class="beta_status">
-			</div>
-                        
                         <div class="contribute">
                           <h2>Contribute to Godock</h2>
                           <p>We need your help to make Godock a great community resource.  Here are a couple of ways you can contribute.</p>
@@ -82,13 +85,11 @@
                     <span class="find_functions_without_examples"><a href="/management/clojure_core">Find vars that need examples.</a></span>
                     -->
                   </div>
-                  <!--
                   <%= image_tag "curly_bracket.png", :class => "curly", :width => 355, :height => 102 %>
                   <div class="recently_updated_panel">
-                    <h2>Recently Updated <a href="/feed/recent_updates" alt="All recent updates RSS feed"><%= image_tag 'browser-rss.png', :width => 20, :height => 20 %></a></h2>
-                    <%= render :partial => '/recently_updated', :locals => {:recently_updated => @recently_updated}%>
+                    <h2>Recently Updated <a href="/feed/recent_updates"><%= image_tag 'browser-rss.png', width: 20, height: 20, alt: "All recent updates RSS feed" %></a></h2>
+                    <%= render partial: 'shared/recently_updated', object: @recently_updated %>
                   </div>
-                  -->
 		</div>
 
 		<div class="clear"></div>

@@ -18,8 +18,10 @@ gem 'ruby-openid'
 gem 'rack-openid', :require => nil
 gem "pg"
 gem "pg_search"
-#gem 'dalli', '~> 1.0.5'
+gem 'dalli'
+gem 'rack-cache'
 gem 'acts_as_commentable_with_threading'
+gem 'acts_as_versioned', :git => 'https://github.com/jwhitehorn/acts_as_versioned.git'
 
 gem 'rdiscount', '1.6.5'
 gem 'chronic', '0.2.3'

@@ -160,20 +160,20 @@ CD.Examples = function() {
 		
 		var root = $(el)
 
-		root.find(".edit").click(function(e) {	
-			var example_id = $(this).attr("id").split("_")[1]
-			var example = $("#example_" + example_id)
+ 		root.find(".edit").click(function(e) {	
+      var example = $(this);
+			var example_id = example.attr("id").split("_")[1];
 
 			var old_content = example.find(".content").text()
 			var plain_content = example.find(".plain_content").text()
-			var new_content = $(editExampleFormHTML)
+			var new_content = editExampleFormHTML;
 
 			example.slideUp(function() {
 				example.find(".content").html(new_content)
 
 				example.find(".cancel").click(function(e) {
 					example.slideUp(function() {
-						example.find(".content").html("<pre class='brush: go'>" + plain_content.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</pre>")
+						example.find(".content").html("<pre class='brush: go'>" + plain_content + "</pre>")
 						example.find(".edit").css('display', 'inline')
 						example.removeClass("editing")
 						SyntaxHighlighter.highlight(example)

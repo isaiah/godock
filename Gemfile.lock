@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/jwhitehorn/acts_as_versioned.git
+  revision: c0a70fb2bb8f3fef65852f79d636da8dfdca9f24
+  specs:
+    acts_as_versioned (3.2.0)
+      activerecord (>= 3.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -50,6 +57,7 @@ GEM
     chronic (0.2.3)
       hoe (>= 1.2.1)
     coderay (1.0.8)
+    dalli (2.6.2)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -179,9 +187,11 @@ PLATFORMS
 DEPENDENCIES
   ZenTest (= 4.4.0)
   acts_as_commentable_with_threading
+  acts_as_versioned!
   better_errors
   capistrano
   chronic (= 0.2.3)
+  dalli
   devise
   devise_openid_authenticatable
   feedbacker
@@ -194,6 +204,7 @@ DEPENDENCIES
   pg_search
   pry
   psych
+  rack-cache
   rack-openid
   rails (~> 3.2.12)
   rcov (= 0.9.9)

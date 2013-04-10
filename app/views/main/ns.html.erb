@@ -51,7 +51,9 @@
 	<% if @ns and @ns.doc != ""%>
 	<div class="doc">
 		<h3>DocString</h3>
-		<%= raw @ns.doc %>
+                <div class="content">
+                  <%= raw @ns.doc %>
+                </div>
 		<div class="copyright_license">
 			<%= @library.copyright %>
 			

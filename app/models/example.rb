@@ -1,4 +1,11 @@
 class Example < ActiveRecord::Base
+  acts_as_versioned
+
+  Example.versioned_class.class_eval do
+    belongs_to :user
+    belongs_to :examplable, polymorphic: true
+  end
+
   belongs_to :examplable, polymorphic: true
   belongs_to :user
   

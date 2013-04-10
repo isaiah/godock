@@ -1,0 +1,11 @@
+<div class="recent_see_also">
+  on
+  <a href="<%= func.href %>"><span class="ns"><%= func.ns.name %>/</span><span class="name"><%= func.name %></span></a>
+  <div class="timestamp">
+          by
+          <span class="user">
+                  <%= link_to u.user.login, :controller => 'users', :action => 'profile', :login => u.user.login %>
+          </span>
+          <%= time_ago_or_time_stamp(u.updated_at)%>
+  </div>
+</div>

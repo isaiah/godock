@@ -1,31 +1,30 @@
 <li>
 <div class="example" id="example_<%= example.id %>">
-	<% if (defined? hide_controls) && hide_controls %>
-	<div class="controls">
-		<a class="permalink" name="example_<%= example.id %>" href="#example_<%= example.id %>">link</a>
-		|
-		<%= link_to 'changes', {:controller => 'examples', :action => 'view_changes', :id => example.id}, :class => 'view_changes' %>
-		<% if current_user %>
-			|
-		  <a href="#" class="edit" id="edit_<%= example.id %>">
-			<!-- <%= image_tag "pen_alt_fill_12x12.png", :alt => "edit", :title => "edit", :width => 12, :height => 12 %> -->
-			edit
-		  </a> 
-			
-			<% if example.user == current_user %>
-			|
-                        <%= link_to 'delete', example, method: :delete, class: "delete" %>
-			<% end %>
-		<% end %>
-	</div>
-	<% end %>
-	<div class="clear"></div>
-	<div class="content">
-          <pre class="brush: go; ruler: true">
+  <% if (defined? hide_controls) && hide_controls #FIXME %>
+  <div class="controls">
+          <a class="permalink" name="example_<%= example.id %>" href="#example_<%= example.id %>">link</a>
+          |
+          <%= link_to 'changes', example, :class => 'view_changes', target: "_blank" %>
+          <% if current_user %>
+                  |
+            <a href="#" class="edit" id="edit_<%= example.id %>">
+                  edit
+            </a> 
+                  
+                  <% if example.user == current_user %>
+                  |
+                  <%= link_to 'delete', example, method: :delete, class: "delete" %>
+                  <% end %>
+          <% end %>
+  </div>
+  <% end %>
+  <div class="clear"></div>
+  <div class="content">
+    <pre class="brush: go; ruler: true">
 <%= example.body %>
-          </pre>
-	</div>
-	<div class="hidden plain_content"><%= example.body.gsub("<", "&lt;").gsub(">", "&gt;") %></div>
-	<div class="clear"></div>
+    </pre>
+  </div>
+  <div class="hidden plain_content"><%= example.body.gsub("<", "&lt;").gsub(">", "&gt;") %></div>
+  <div class="clear"></div>
 </div>
 </li>

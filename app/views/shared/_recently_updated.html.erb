@@ -1,0 +1,9 @@
+<% recently_updated.each do |u| %>
+  <% if u.is_a? Comment %>
+    <%= render partial: 'shared/recent_comment', locals: {u: u, func: u.commentable} %>
+  <% elsif u.is_a? SeeAlso %>
+    <%= render partial: 'shared/recent_see_also', locals: {u: u, func: u.from_function} %>
+  <% else #Example::Version %>
+    <%= render partial: 'shared/recent_example', locals: { u: u, func: u.examplable} %>
+  <% end %>
+<% end %>
