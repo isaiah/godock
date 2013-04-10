@@ -1,6 +1,6 @@
 <li>
 <div class="example" id="example_<%= example.id %>">
-  <% unless (defined? hide_controls) && hide_controls %>
+  <% if (defined? hide_controls) && hide_controls #FIXME %>
   <div class="controls">
           <a class="permalink" name="example_<%= example.id %>" href="#example_<%= example.id %>">link</a>
           |
