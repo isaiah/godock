@@ -32,5 +32,5 @@ ClojuredocsPg::Application.configure do
     :metastore   => "memcached://127.0.0.1:11211/meta",
     :entitystore => "memcached://127.0.0.1:11211/body"
 
-  ROOT_URL = ""
+  ROOT_URL = "http://www.godock.org"
 end

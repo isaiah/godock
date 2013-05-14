@@ -28,4 +28,3 @@ module ClojuredocsPg
     config.assets.initialize_on_precompile = false
   end
 end
-ROOT_URL = ""

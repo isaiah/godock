@@ -18,3 +18,4 @@ ClojuredocsPg::Application.configure do
   config.active_support.deprecation = :log
   config.assets.debug = true
 end
+ROOT_URL = "http://localhost:3000"
