@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
+
   def profile
-    
     @user = User.find_by_login(params[:login])
-   
     if not @user
       render :template => 'public/404.html', :layout => false, :status => 404
     end

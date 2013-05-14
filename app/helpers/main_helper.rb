@@ -30,4 +30,17 @@ module MainHelper
     ret << "</ul>"
     ret.html_safe
   end
+
+  def full_namespace_for_func(func)
+    if @function.functional.is_a?(TypeClass)
+      " - #{@function.functional.namespace.name}.#{@function.functional.name}.#{@function.name}"
+    else
+      " - #{@function.functional.name}.#{@function.name}"
+    end
+  end
+
+  def full_namespace_for_type_class(type_class)
+    " - #{@type_class.namespace.name}.#{type_class.name}"
+  end
+
 end

@@ -9,7 +9,7 @@
             &nbsp;
             &nbsp;
           <span class="user_area_content">
-              <% if current_user && current_user.email && current_user.login %>
+              <% if user_signed_in? && current_user.email && current_user.login %>
                 <%= image_tag(grav_url_for(current_user.email, 16), :class => 'user_area_gravatar') %>
                 Logged in as <%= link_to current_user.login, :controller => 'users', :action => 'profile', :login => current_user.login %>
                 |

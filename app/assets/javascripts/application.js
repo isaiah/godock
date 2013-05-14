@@ -8,6 +8,7 @@
 //= require jquery.form
 //= require jquery.scrollTo-1.4.2-min
 //= require showdown
+//= require shCore
 //= require shBrushGo
 //= require jquery.qtip.min
 //= require cd

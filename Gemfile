@@ -21,7 +21,8 @@ gem "pg_search"
 gem 'dalli'
 gem 'rack-cache'
 gem 'acts_as_commentable_with_threading'
-gem 'acts_as_versioned', :git => 'https://github.com/jwhitehorn/acts_as_versioned.git'
+gem 'acts_as_versioned', github: "jwhitehorn/acts_as_versioned"
+gem 'acts_as_voteable', github: 'zonecheung/acts_as_voteable'
 
 gem 'rdiscount', '1.6.5'
 gem 'chronic', '0.2.3'
