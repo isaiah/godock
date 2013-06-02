@@ -92,15 +92,7 @@
 	
 	
 	<div class="clear"></div>
-        <% if user_signed_in? %>
-          <%= render(:partial => 'feedbacker/tab') %>
-        <% else %>
-          <div id="feedback">
-            <div id="compressed_feedback_form_tab">
-              <%= link_to image_tag('feedback_tab.png'), "/login" %>
-            </div>
-          </div>
-        <% end %>
+        <%= render(:partial => 'feedbacker/tab') %>
 	<div class="footer">
 		Godock uses some elements of HTML5 / CSS3, and is best viewed in an up-to-date <a href="http://getfirefox.com">gecko</a> / <a href="http://www.google.com/chrome">webkit</a> -based browser.
 		<br />

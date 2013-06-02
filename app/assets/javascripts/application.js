@@ -12,6 +12,7 @@
 //= require shBrushGo
 //= require jquery.qtip.min
 //= require cd
+//= require feedbacker
 
 //= require_tree .
 //

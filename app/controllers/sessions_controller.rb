@@ -4,7 +4,7 @@ class SessionsController < Devise::SessionsController
     if resource.email.blank? || resource.login.blank?
       redirect_to new_user_path(identity_url: resource.identity_url)
     else
-      sign_in(:user, resource)
+      sign_in(:user, resource, bypass: true)
       respond_with resource, location: after_sign_in_path_for(resource)
       #set_flash_message(:notice, :signed_in) if is_navigational_format?
       #sign_in(:user, resource)
