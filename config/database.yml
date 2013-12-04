@@ -1,0 +1,22 @@
+shared: &shared
+  host: 127.0.0.1 #thinking_sphinx dosen't like sock, have to use ip
+  adapter: postgresql
+  username: postgres
+
+development:
+  database: godock_development
+  <<: *shared
+
+test:
+  database: clojuredocs_test
+  <<: *shared
+
+production:
+  adapter: postgresql
+  database: <%=ENV['OPENSHIFT_APP_NAME']%>
+  username: <%=ENV['OPENSHIFT_POSTGRESQL_DB_USERNAME']%>
+  password: <%=ENV['OPENSHIFT_POSTGRESQL_DB_PASSWORD']%>
+  host: <%=ENV['OPENSHIFT_POSTGRESQL_DB_HOST']%>
+  port: <%=ENV['OPENSHIFT_POSTGRESQL_DB_PORT']%>
+  min_messages: ERROR
+  reconnect: false

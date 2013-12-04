@@ -11,4 +11,3 @@ tags
 .rbenv-version
 Capfile
 config/deploy.rb
-config/database.yml
