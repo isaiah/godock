@@ -1,10 +1,10 @@
 shared: &shared
   host: 127.0.0.1 #thinking_sphinx dosen't like sock, have to use ip
   adapter: postgresql
-  username: postgres
+  username: isaiah
 
 development:
-  database: godock_development
+  database: godock_dev
   <<: *shared
 
 test:
