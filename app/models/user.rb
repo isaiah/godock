@@ -4,8 +4,6 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :openid_authenticatable, :rememberable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :remember_me, :identity_url, :login, :email
   def self.find_by_login_or_email(login)
     User.find_by_login(login) || User.find_by_email(login)
   end

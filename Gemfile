@@ -5,13 +5,13 @@ group :assets do
   gem 'therubyracer', '~> 0.10.2', :platforms => :ruby
 
   gem 'jquery-ui-rails'
-  gem 'sass-rails'
 
   gem 'uglifier', '>= 1.0.3'
   gem 'zurb-foundation', '~> 4.0.0'
   gem 'font-awesome-rails'
 end
 
+gem 'sass-rails'
 gem 'jquery-rails'
 gem 'rails', '~> 4.0.0'
 gem 'ruby-openid'
@@ -19,7 +19,8 @@ gem 'rack-openid', :require => nil
 gem "pg_search"
 gem 'dalli'
 gem 'rack-cache'
-#gem 'acts_as_commentable_with_threading'
+gem 'acts_as_commentable_with_threading', github: "elight/acts_as_commentable_with_threading"
+
 gem 'acts_as_versioned', github: "jwhitehorn/acts_as_versioned"
 gem 'acts_as_voteable', github: 'zonecheung/acts_as_voteable'
 
@@ -33,13 +34,13 @@ end
 platform :jruby do
   gem 'kramdown'
   gem 'jubilee'
-  gem 'pg_jruby'
+  gem 'activerecord-jdbcpostgresql-adapter'
 end
 
 gem 'chronic', '0.2.3'
 gem 'will_paginate'
 #gem 'levenshtein', '0.2.0'
-gem 'haml'
+gem 'haml-rails'
 
 group :development do
   gem 'pry'

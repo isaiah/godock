@@ -1,5 +1,5 @@
 shared: &shared
-  host: 127.0.0.1 #thinking_sphinx dosen't like sock, have to use ip
+  host: 127.0.0.1 
   adapter: postgresql
   username: isaiah
 

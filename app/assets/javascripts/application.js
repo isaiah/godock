@@ -13,6 +13,9 @@
 //= require jquery.qtip.min
 //= require cd
 //= require feedbacker
+//= require angular
+//= require angular-route
+//= require angular-resource
 
 //= require_tree .
 //

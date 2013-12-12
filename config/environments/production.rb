@@ -30,6 +30,8 @@ ClojuredocsPg::Application.configure do
   config.assets.compile = false
   config.assets.digest = true
 
+  config.eager_load = true
+
   # Enable threaded mode
   # config.threadsafe!
   config.middleware.use Rack::Cache,

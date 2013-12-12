@@ -1,7 +1,6 @@
 class TypeClass < ActiveRecord::Base
   include PgSearch
 
-  attr_accessible :arglists_comp, :doc, :name, :namespace_id, :version
   has_many :functions, :dependent => :delete_all, as: :functional
   has_many :examples, as: :examplable
   has_many :comments

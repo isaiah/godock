@@ -4,41 +4,41 @@ ClojuredocsPg::Application.routes.draw do
   resources :users
   resources :remarks
 
-  match '/profile/:login' => 'users#profile', as: "user_profile"
-  match '/search_autocomplete' => 'main#search_autocomplete'
-  match '/search' => 'main#search'
-  match '/search/:lib' => 'main#search'
-  match '/ac_search' => 'main#lib_search'
-  match '/ac_search/:lib' => 'main#lib_search'
+  get '/profile/:login' => 'users#profile', as: "user_profile"
+  get '/search_autocomplete' => 'main#search_autocomplete'
+  get '/search' => 'main#search'
+  get '/search/:lib' => 'main#search'
+  get '/ac_search' => 'main#lib_search'
+  get '/ac_search/:lib' => 'main#lib_search'
   resources :examples
   resources :comments
-  match '/quickref/:lib' => 'main#quick_ref_shortdesc'
-  match '/quickref/shortdesc/:lib' => 'main#quick_ref_shortdesc'
-  match '/quickref/varsonly/:lib' => 'main#quick_ref_vars_only'
-  match '/feed/recent_updates' => 'feed#recent_updates'
-  match '/see_also/lookup' => 'see_also#lookup'
-  match '/see_also/delete' => 'see_also#delete'
-  match '/see_also/vote' => 'see_also#vote'
-  match '/see_also/add' => 'see_also#add'
-  match '/v/:id' => 'main#function_short_link'
-  match '/libs' => 'main#libs'
-  match '/management/search/:lib' => 'management#search'
-  match '/management/:lib/function' => 'management#function'
-  match '/management/:lib' => 'management#index'
-  match '/:lib/:version' => 'main#lib', :constraints => { :version => /\d+\.[^\/]*/ }
-  match '/:lib/:version/builtin/(:type_class)$(:function)' => 'main#function', constraints: { version: /\d+\.[^\/]*/ }
-  match '/:lib/:version/builtin/:type_class' => 'main#type_class', constraints: { :version => /\d+\.[^\/]*/}
-  match '/:lib/:version/*ns/:type_class' => 'main#type_class', constraints: { :version => /\d+\.[^\/]*/, ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
-  match '/:lib/:version/*ns/(:type_class)$(:function)' => 'main#function', constraints: { version: /\d+\.[^\/]*/, ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
-  match '/:lib/:version/(*ns)$(:function)' => 'main#function', :constraints => { :version => /\d+\.[^\/]*/ }
-  match '/:lib/:version/*ns' => 'main#ns', :constraints => { :version => /\d+\.[^\/]*/ }
-  match '/:lib' => 'main#lib'
-  match '/:lib/builtin/(:type_class)$(:function)' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/ }
-  match '/:lib/builtin/:type_class' => 'main#type_class', constraints: { ns: /\w+(\/\w+)*?/ }
-  match '/:lib/*ns/:type_class' => 'main#type_class', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
-  match '/:lib/*ns/(:type_class)$(:function)' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
-  match '/:lib/(*ns)$(:function)' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/ }
-  match '/:lib/*ns' => 'main#ns'
+  get '/quickref/:lib' => 'main#quick_ref_shortdesc'
+  get '/quickref/shortdesc/:lib' => 'main#quick_ref_shortdesc'
+  get '/quickref/varsonly/:lib' => 'main#quick_ref_vars_only'
+  get '/feed/recent_updates' => 'feed#recent_updates'
+  get '/see_also/lookup' => 'see_also#lookup'
+  get '/see_also/delete' => 'see_also#delete'
+  get '/see_also/vote' => 'see_also#vote'
+  get '/see_also/add' => 'see_also#add'
+  get '/v/:id' => 'main#function_short_link'
+  get '/libs' => 'main#libs'
+  get '/management/search/:lib' => 'management#search'
+  get '/management/:lib/function' => 'management#function'
+  get '/management/:lib' => 'management#index'
+  get '/:lib/:version' => 'main#lib', :constraints => { :version => /\d+\.[^\/]*/ }
+  get '/:lib/:version/builtin/(:type_class)$(:function)' => 'main#function', constraints: { version: /\d+\.[^\/]*/ }
+  get '/:lib/:version/builtin/:type_class' => 'main#type_class', constraints: { :version => /\d+\.[^\/]*/}
+  get '/:lib/:version/*ns/:type_class' => 'main#type_class', constraints: { :version => /\d+\.[^\/]*/, ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
+  get '/:lib/:version/*ns/(:type_class)$(:function)' => 'main#function', constraints: { version: /\d+\.[^\/]*/, ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
+  get '/:lib/:version/(*ns)$(:function)' => 'main#function', :constraints => { :version => /\d+\.[^\/]*/ }
+  get '/:lib/:version/*ns' => 'main#ns', :constraints => { :version => /\d+\.[^\/]*/ }
+  get '/:lib' => 'main#lib'
+  get '/:lib/builtin/(:type_class)$(:function)' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/ }
+  get '/:lib/builtin/:type_class' => 'main#type_class', constraints: { ns: /\w+(\/\w+)*?/ }
+  get '/:lib/*ns/:type_class' => 'main#type_class', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
+  get '/:lib/*ns/(:type_class)$(:function)' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/, type_class: /[A-Z]+\w+/ }
+  get '/:lib/(*ns)$(:function)' => 'main#function', constraints: { ns: /\w+(\/\w+)*?/ }
+  get '/:lib/*ns' => 'main#ns'
   root :to => "main#index"
 end
 
