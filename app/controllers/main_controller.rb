@@ -7,7 +7,6 @@ class MainController < ApplicationController
   end
 
   def index
-    num_recent = 6
     num_tc = 24
     @recently_updated = find_recently_updated(7, nil)
     @top_contributors = []
@@ -30,22 +29,22 @@ class MainController < ApplicationController
         #end
       end
     end
-    
+
     @top_contributors = @top_contributors[0, num_tc]
   end
 
   def lib
     name = params[:lib]
     version = params[:version]
-    
+
     @library = nil
-    
+
     if version
       @library = Library.find_by_url_friendly_name_and_version(name, version)
     else
       @library = Library.find_by_url_friendly_name_and_current(name, true)
     end
-    
+
     if not @library
       logger.error "Tried to load library #{params[:lib]}"
 
